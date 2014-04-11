@@ -1,0 +1,1024 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Gaea, Analysis and GFDL notes</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="title" content="Gaea, Analysis and GFDL notes"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-08-26 16:34:56 EDT"/>
+<meta name="author" content="Thomas Flannagan"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Gaea, Analysis and GFDL notes</h1>
+
+<p>This document is a collection of all the poorly documented or
+undocumented things that I have come across while hacking around with
+the <code>HSt42</code> model in <code>idealized.xml</code> (<code>basic_hs.xml</code> and <code>zonalacc.xml</code> are
+the resulting files that I have written). I assume that most of these
+principles are fairly general to the GFDL/gaea system.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Storage and Data</a>
+<ul>
+<li><a href="#sec-1-1">1.1 Analysis and Archive</a></li>
+<li><a href="#sec-1-2">1.2 Copying data</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 XML, Compiling and Running</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Commands</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1 fremake</a></li>
+<li><a href="#sec-2-1-2">2.1.2 frerun</a></li>
+<li><a href="#sec-2-1-3">2.1.3 Other useful commands</a></li>
+<li><a href="#sec-2-1-4">2.1.4 My custom commands</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2 Notes</a></li>
+<li><a href="#sec-2-3">2.3 Making a new experiment</a></li>
+<li><a href="#sec-2-4">2.4 Modifying the model code</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1 Basic Procedure</a></li>
+<li><a href="#sec-2-4-2">2.4.2 Comments</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5 Editing and making directly</a></li>
+<li><a href="#sec-2-6">2.6 Restart runs</a>
+<ul>
+<li><a href="#sec-2-6-1">2.6.1 <span style="text-decoration:underline;">Regression runs</span></a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Model Configuration</a>
+<ul>
+<li><a href="#sec-3-1">3.1 Horizontal resolution</a></li>
+<li><a href="#sec-3-2">3.2 Vertical coordinate</a></li>
+<li><a href="#sec-3-3">3.3 Sponge</a></li>
+<li><a href="#sec-3-4">3.4 Held-Suarez Forcing</a></li>
+<li><a href="#sec-3-5">3.5 Local Momentum Forcing</a>
+<ul>
+<li><a href="#sec-3-5-1">3.5.1 Zonal mean caveats</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-6">3.6 Local Heating</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Storage and Data</h2>
+<div class="outline-text-2" id="text-1">
+
+<ul>
+<li>long term fast scratch (<code>ltfs</code>) items are deleted after 90 days
+  (roughly?) if not modified. This is automatic. Therefore keep my
+  modified code in user directory. I use symbolic links in ltfs to my
+  code to avoid having to deal with paths.
+</li>
+<li>fast scratch (<code>fs</code>) is cleared more frequently so shouldn't be used
+  for anything.
+</li>
+<li>archive (see below) is backed up and permanent.
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Analysis and Archive</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p><code>/archive/Thomas.Flannaghan</code> is where data is delivered after runs
+finish (automatic). This directory is on the <code>analysis</code> machine (also
+mounted as read-only on <code>public</code>). Data analysis should be done on the
+<code>analysis</code> machine. Log in via public using a different RSA code.
+</p>
+<p>
+Data is delivered to rather cryptic folders. I've written a little
+tool called <code>archtool.py</code> to automate the organising of runs. This tool
+displays a list of all runs on <code>archive</code> along with when they were
+created. At present, the only thing that can be done is automatically
+extracting the data (and run namelists) to a new sub-directory ("run
+code" in the run index). The tool automatically recognises and handles
+restart runs.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Copying data</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<ul>
+<li><code>gcp</code> allows movement between gaea, analysis and GFDL but not
+  outside it.
+</li>
+<li>Normal <code>scp</code> and <code>ssh</code> are available on GFDL workstations
+  (i.e. <code>public</code>).
+</li>
+<li><code>archive</code> is mounted on <code>public</code> at <code>/archive/$USER/</code> (read only) so
+  we can do <code>public&gt; scp /archive/$USER/.... atmos02:/...</code> to move
+  data to sayre.
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> XML, Compiling and Running</h2>
+<div class="outline-text-2" id="text-2">
+
+<p>This section is valid for running the HSt42 spectral dynamical core
+(defined in <code>idealized.xml</code>). Other models may be more complicated but
+I suppose the principles are the same.
+</p>
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Commands</h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+</div>
+
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> fremake</h4>
+<div class="outline-text-4" id="text-2-1-1">
+
+<p>Performs a CVS operation (see below) used to make a new
+experiment. This command does not actually do the <span style="text-decoration:underline;">make</span>, but instead
+returns a command that will run the makescript. This command should be
+run after any source modifications are made.
+</p>
+<p>
+<code>fremake -x &lt;xmlfile&gt; &lt;experiment&gt;</code>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> frerun</h4>
+<div class="outline-text-4" id="text-2-1-2">
+
+<p><code>frerun</code> does two things; first, it constructs the input namelists and
+diag-table files. Then it submits the experiment as a job.
+</p>
+<p>
+<code>frerun --overwrite -r basic --submit-staged -x &lt;xmlfile&gt; &lt;experiment&gt;</code>
+</p>
+<p>
+The <code>--overwrite</code> flag refers to overwriting the results output on
+<code>analysis</code>. It does not overwrite the run environment on fast scratch.
+Alternatively, <code>--unique</code> can be used instead; this saves results to
+unique locations on <code>analysis</code>. Use <code>--unique</code> to run multiple copies of
+the same experiment simultaneously. The <code>--unique</code> flag uses the same
+binary as the previous run, so don't use when code updated.
+</p>
+<p>
+The <code>-r basic</code> option specifies the regression run. Omit and <code>fremake</code>
+will do a production run. Currently I only know about regression runs,
+which are good for any job that takes less than 16 hours to complete
+(typically 5000 days at T42 with 60 levels).
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> Other useful commands</h4>
+<div class="outline-text-4" id="text-2-1-3">
+
+<ul>
+<li><code>showq -u $USER</code> lists the current jobs belonging to <code>$USER</code>.
+</li>
+<li><code>mjobctl -c gaea.xxxxxxx</code> cancels a job.
+</li>
+<li><code>gcp</code> copies stuff between <code>gaea</code> and <code>analysis</code>. Cannot do directories,
+  so <code>tar</code> first.
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-1-4" class="outline-4">
+<h4 id="sec-2-1-4"><span class="section-number-4">2.1.4</span> My custom commands</h4>
+<div class="outline-text-4" id="text-2-1-4">
+
+<ul>
+<li><code>archtool.py</code> is a tool for managing archive. It detects restart runs,
+  extracts the tar files, and saves the restart information.
+</li>
+<li><code>add_restart.py</code> is a tool for setting up regression runs with restart
+  information. See <a href="#sec-2-6">Restart runs</a> for documentation.
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Notes</h3>
+<div class="outline-text-3" id="text-2-2">
+
+<p>All settings for compiling experiments and for running jobs can be
+specified in the XML file. <code>frerun</code> remakes all namelist files so if
+only runtime options in the XML are modified, we do not need to
+remake.
+</p>
+<p>
+The "group letter" is found in the XML inside the <code>project</code> tag. This
+is "gfdl<sub>w</sub>". Any references to c1 and c2 should be removed from this
+string. The job will silently fail if this is wrong or not set :-(. An
+XML example is
+</p>
+
+
+<pre class="example">...
+&lt;platform name="ncrc2.default"&gt;
+  &lt;directory stem="$(FRE_STEM)"/&gt;
+  &lt;project&gt;gfdl_w&lt;/project&gt;
+  ...
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Making a new experiment</h3>
+<div class="outline-text-3" id="text-2-3">
+
+<p>An experiment is defined as a unique codebase. We do not need new
+experiments if we are just changing namelists. They are defined in the
+XML.
+</p>
+<ol>
+<li>Copy an existing experiment in the XML
+</li>
+<li>Change the <span style="text-decoration:underline;">name</span> and <span style="text-decoration:underline;">path</span> of the experiment (see example below)
+</li>
+<li>Run <code>fremake</code> but <b>don't run command given at end of fremake</b>
+</li>
+<li>Check to see that <b>CVS operations</b> took place during <code>fremake</code>. If not,
+   the name or path was not changed correctly (see <span style="text-decoration:underline;">step 2</span>) and an
+   existing experiment was in the path given.
+</li>
+</ol>
+
+
+<p>
+The experiment XML should end up like this:
+</p>
+
+
+
+<pre class="example">&lt;experiment name="{experiment name}"&gt;
+  &lt;description&gt;
+    Blah blah blah
+  &lt;/description&gt;
+  &lt;component name="fms_spectral_solo" 
+             paths="$(rootDir)/{experiment name}/src" 
+             includeDir="$(srcDir)/shared/include"&gt;
+    &lt;source versionControl="cvs"&gt;
+      ...
+</pre>
+
+
+<p>
+where <code>{experiment name}</code> is the name of the experiment (must be unique
+in the XML file).
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Modifying the model code</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+</div>
+
+<div id="outline-container-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Basic Procedure</h4>
+<div class="outline-text-4" id="text-2-4-1">
+
+<p>If modifying an existing experiment, skip to <span style="text-decoration:underline;">step 2</span> below. Running
+<code>fremake</code> again is not a good idea (although it will detect and not
+overwrite existing code).
+</p>
+<ol>
+<li>Make a new experiment (see <a href="#sec-2-3">above</a>)
+</li>
+<li>Change fortran code on <code>ltfs</code>. <b>Save changes in home dir (ltfs is    volatile).</b>
+</li>
+<li><b>Run command</b> returned by <span style="text-decoration:underline;">step 1</span> (don't need to use <code>msub</code> &ndash; run it
+   directly). It's a <b>make script</b> and it will compile the code on <code>ltfs</code>.
+</li>
+<li><i>Fiddle with namelists, output tables in the XML etc</i>
+</li>
+<li>Submit the model job using <a href="#sec-2-1-2">*frerun</a> with <b>overwrite</b> flag set. For
+   some reason, using the unique flag uses the old executable.
+</li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Comments</h4>
+<div class="outline-text-4" id="text-2-4-2">
+
+<p>When first run, fremake downloads the model code to ltfs. Other
+invocations of fremake do not do this. It then gives a script to
+compile the code. Don't run this until you've made changes to the code
+stored on ltfs under the correct name.
+</p>
+<p>
+ltfs stuff is sometimes deleted. Always keep a copy of changed code
+(or maybe the whole tree) in your home directory.
+</p>
+<p>
+The make script just compiles the binaries. It does not read the
+namelist parameters set in the xml file.
+</p>
+<p>
+The run script does not change the ltfs code either. It uses fs.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Editing and making directly</h3>
+<div class="outline-text-3" id="text-2-5">
+
+<p>There is an interactive mode which is good for debugging compiler and
+runtime errors. To get an interactive session, use
+</p>
+<p>
+<code>msub -I -l walltime=01:00:00,size=16</code>
+</p>
+<p>
+This gives a terminal that will work for 1 hour with 16 cores (the
+number of cores must be the same as <code>npes</code> in the XML &ndash; see <a href="#sec-3-1">*Horizontal resolution</a>). From this interactive terminal, we can make the model
+using <code>make</code> (with env script) or using the build script, and we can run
+the model executable using
+</p>
+<p>
+<code>aprun -n 16 fms_HSt42_.....x</code>
+</p>
+<p>
+Running the model produces a lot of netcdf files which need combining
+and sending to archive. I'm not sure how this is done yet. Again, the
+<code>n</code> option refers to the number of cores and must be the same as <code>npes</code> in
+the XML.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Restart runs</h3>
+<div class="outline-text-3" id="text-2-6">
+
+<p>All runs (regression and production) can be restarted.
+</p>
+
+</div>
+
+<div id="outline-container-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> <span style="text-decoration:underline;">Regression runs</span></h4>
+<div class="outline-text-4" id="text-2-6-1">
+
+<p>The process for regression runs has now been automated by my script
+<code>xml/add_restart.py</code>. It is used in the following manner:
+</p>
+<p>
+<code>frerun -u &lt;frerun-options&gt; | ./add_restart.py &lt;restart-dir&gt;</code>
+</p>
+<p>
+where <code>&lt;frerun-options&gt;</code> are standard <code>frerun</code> options but <b>cannot include</b>
+<code>--submit-staged</code>, and <code>&lt;restart-dir&gt;</code> is a directory containing the
+relevant <a href="#sec-2-6-1-1">restart files</a>. The script has been tested and works
+well. Suitable restart directories are stored in <code>~/restarts</code> on <code>gaea</code>.
+</p>
+<p>
+The procedure that the script implements is as follows:
+</p>
+<ol>
+<li>Find the original regression run on <code>/fs/work/...</code>. It should
+   contain a RESTART directory. Note down it's path using <code>pwd</code>.
+</li>
+<li>Run <code>frerun</code> with the <code>--unique</code> flag and without the
+   <code>--submit-staged</code> flag. It will exit with an <code>msub</code> command to
+   run. <b>do not run this msub command yet!</b>
+</li>
+<li>Open the file that is the argument to <code>msub</code> (the run script). It is
+   located in <code>~/siena_201207/.../scripts/run</code>, and will contain
+   something like this:
+
+
+
+<pre class="example">cd $workDir
+set dataFilesNotOK = ( )
+if ( $dataFilesNotOK &gt; 0 ) then  
+</pre>
+
+<p>
+   A search for "dataFilesNotOK" will find this region.
+</p></li>
+<li>Edit this region of the runscript:
+
+
+
+<pre class="example">cd $workDir
+set dataFilesNotOK = ( )
+# add this line. it copies the restart files to input of new run
+# folder. &lt;path_to_run&gt; should be an absolute path.
+cp &lt;path_to_run&gt;/RESTART/* INPUT/.
+###
+if ( $dataFilesNotOK &gt; 0 ) then  
+</pre>
+
+<p>
+   where <code>&lt;path_to_run&gt;</code> is the full path from <span style="text-decoration:underline;">step 1</span>
+</p></li>
+<li>Issue the <code>msub</code> command given at the end of <span style="text-decoration:underline;">step 2</span>
+</li>
+</ol>
+
+
+<ul>
+<li id="sec-2-6-1-1"><a name="restart-files" id="restart-files"></a>Details<br/>
+The files needed for a correct restart are <code>atmos_model.res</code>,
+<code>atmosphere.res.nc</code> and <code>spectral_dynamics.res.nc</code>. These just contain the
+model state and the number of days elapsed. Namelists are not loaded
+from the restarted run. Therefore, we must use appropriate restarts
+given the namelist used.
+
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Model Configuration</h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Horizontal resolution</h3>
+<div class="outline-text-3" id="text-3-1">
+
+<p>The <code>HSt42</code> model defined in <code>idealized.xml</code> gives a typical T42
+resolution run, but we can modify the xml to give different
+resolutions. The key <code>spectral_dynamics_nml</code> namelist parameters are
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="right" /><col class="right" /><col class="right" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">namelist parameter</th><th scope="col" class="right">T21</th><th scope="col" class="right">T42</th><th scope="col" class="right">T85</th></tr>
+</thead>
+<tbody>
+<tr><td class="left"><code>num_fourier</code></td><td class="right">21</td><td class="right">42</td><td class="right">85</td></tr>
+<tr><td class="left"><code>num_spectral</code></td><td class="right">22</td><td class="right">43</td><td class="right">86</td></tr>
+<tr><td class="left"><code>lat_max</code></td><td class="right">32</td><td class="right">64</td><td class="right">128</td></tr>
+<tr><td class="left"><code>lon_max</code></td><td class="right">64</td><td class="right">128</td><td class="right">256</td></tr>
+</tbody>
+</table>
+
+
+<p>
+In addition, we must change the regression or production run
+specification to indicate the number of processors. For regression
+runs, the specification for T42 is something like
+</p>
+
+
+
+<pre class="example">&lt;regression name="..."&gt;
+  &lt;run days="..." npes="16" runTimePerJob="..."/&gt;
+&lt;/regression&gt;
+</pre>
+
+
+<p>
+The <code>npes</code> field is <i>something to do with</i> the number of processors
+required for the run (this is also the number used when triggering an
+interactive session). For T85, increase <code>npes</code> to "32". When the run
+actually is submitted, it typically uses twice the number of cores as
+specified here.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Vertical coordinate</h3>
+<div class="outline-text-3" id="text-3-2">
+
+<p>The <code>spectral_dynamics_nml</code> controls the vertical coordinate. The
+<code>vert_coord_option</code> allows various different ways to define vertical
+coordinates. The simplest of these are "<code>even_sigma</code>" and
+"<code>uneven_sigma</code>".
+</p>
+<p>
+"<code>even_sigma</code>" simply divides the vertical coordinate evenly in sigma,
+from 0 to 1. <code>num_levels</code> gives the number of levels.
+</p>
+<p>
+"<code>uneven_sigma</code>" allows more complicated sigma coordinates. Again,
+<code>num_levels</code> gives the number of levels. The configuration namelist
+settings are as follows
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="right" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">option</th><th scope="col" class="left">meaning</th><th scope="col" class="right">Default</th></tr>
+</thead>
+<tbody>
+<tr><td class="left"><code>surf_res</code></td><td class="left">Confusing &ndash; see <a href="#exact-definitions">exact definitions</a></td><td class="right">0.1</td></tr>
+<tr><td class="left"><code>exponent</code></td><td class="left">Confusing &ndash; see <a href="#exact-definitions">exact definitions</a></td><td class="right">2.5</td></tr>
+<tr><td class="left"><code>scale_heights</code></td><td class="left">Top level expressed in scale heights</td><td class="right">4</td></tr>
+<tr><td class="left"><code>zero_top</code></td><td class="left">Forces top sigma level to be 0</td><td class="right">.true.</td></tr>
+</tbody>
+</table>
+
+
+<p>
+Reasonable (i.e. approx 1 km) resolution at the TTL/lower stratosphere
+can be obtained with 60 levels, and <code>scale_heights = 10</code> (the remaining
+parameters are set to the defaults). Polvani-Kushner use a set of
+custom specified levels but these lie closest to
+</p>
+
+
+
+<pre class="example">=scale_heights=       =11.0,
+=surf_res=            = 0.5,
+exponent            = 3,
+</pre>
+
+
+<p>
+These values are from Martin Jucker (he fitted these parameters to the
+PK levels).
+</p>
+<p>
+<a name="exact-definitions" id="exact-definitions"></a>
+The exact definitions (from <code>atmos_spectral/init/vert_coordinate.F90</code>):
+</p>
+<p>
+<code>p = a * p_ref + b * p_surf</code>
+</p>
+<p>
+where <code>p_surf</code> is the instantaneous surface pressure and <code>p_ref</code> is some
+constant. <code>uneven_sigma</code> defines <code>a</code> and <code>b</code> as follows
+</p>
+
+
+
+<pre class="example">! a is set to zero
+a = 0
+
+! b is defined by:
+do k = 1,num_levels
+   zeta = 1 - float(k - 1) / float(num_levels)
+   z    = =surf_res= * zeta + (1 - surf_res) * zeta**exponent
+   b(k) = exp(-z * scale_heights)
+enddo
+
+! sort out the model surface level and top level
+b(num_levels+1) = 1.0
+if (zero_top) b(1) = 0.0
+</pre>
+
+
+<p>
+Therefore, when <code>surf_res = 1</code> we have roughly evenly spaced levels in
+height (exactly even in log-pressure coordinates). When <code>surf_res = 0</code>
+we have exponentially spaced levels. This means that <code>surf_res</code> doesn't
+really have anything to do with the surface &ndash; it is more like saying
+"how close to linear are we?". It's value affects the resolution
+everywhere.
+</p>
+<p>
+Here is a simple calculator which also gives the approximate height
+(log-pressure height).
+</p>
+
+
+
+<pre class="example"># namelist parameters:
+num_levels = 10
+scale_heights = 11
+surf_res = 0.5
+exponent = 3
+
+import math
+for k in range(1, num_levels + 1):
+    zeta = 1 - (k - 1) / float(num_levels)
+    z = surf_res * zeta + (1 - surf_res) * zeta ** exponent
+    b = math.exp(-z * scale_heights)
+    b_km = 7 * z * scale_heights       
+    print 'b(%d) =\t%0.3f (approx %0.1f km)' % (k, b, b_km)
+
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Sponge</h3>
+<div class="outline-text-3" id="text-3-3">
+
+<p>There is <b>no sponge by default</b> in the <code>HSt42</code> model defined in
+<code>idealized.xml</code>. There is only an optional very simple sponge available,
+which acts on only the top level (defined in <code>spectral_damping.F90</code>). It
+is defined by the following parameters in <code>spectral_dynamics_nml</code>:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="right" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">option</th><th scope="col" class="left">meaning</th><th scope="col" class="right">default</th></tr>
+</thead>
+<tbody>
+<tr><td class="left"><code>eddy_sponge_coeff</code></td><td class="left">Eddy damping in top layer</td><td class="right">0</td></tr>
+<tr><td class="left"><code>zmu_sponge_coeff</code></td><td class="left">Zonal mean u damping</td><td class="right">0</td></tr>
+<tr><td class="left"><code>zmv_sponge_coeff</code></td><td class="left">Zonal mean v damping</td><td class="right">0</td></tr>
+</tbody>
+</table>
+
+
+<p>
+All coefficients are in units of m<sup>2</sup>/s, and are applied as damping
+terms like \(coeff * \Delta^2\).
+</p>
+<p>
+The Polvani-Kushner <code>hs_forcing.F90</code> file (given to me by Martin) has a
+more advanced sponge. I have added it to my <code>hs_forcing_zonalacc.F90</code>
+file. The following options control the sponge, and are given in the
+<code>hs_forcing_nml</code> namelist.
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">option</th><th scope="col" class="left">meaning</th><th scope="col" class="left">default</th></tr>
+</thead>
+<tbody>
+<tr><td class="left"><code>sponge_flag</code></td><td class="left">Is sponge used?</td><td class="left">.false.</td></tr>
+<tr><td class="left"><code>sponge_tau_days</code></td><td class="left">The sponge timescale (days)</td><td class="left">1</td></tr>
+<tr><td class="left"><code>sponge_pbottom</code></td><td class="left">The lowest level to apply sponge (<b>Pascals</b>)</td><td class="left">100</td></tr>
+</tbody>
+</table>
+
+
+<p>
+The sponge is a Rayleigh friction with coefficient given by
+<code>sponge_coeff * (1 - p / sponge_pbottom) ** 2</code>. <code>sponge_coeff</code> is the
+inverse timescale derived from <code>sponge_tau_days</code>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Held-Suarez Forcing</h3>
+<div class="outline-text-3" id="text-3-4">
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="right" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">option</th><th scope="col" class="left"></th><th scope="col" class="right">default</th></tr>
+</thead>
+<tbody>
+<tr><td class="left"><code>t_zero</code></td><td class="left">Surface temperature at equator</td><td class="right">315</td></tr>
+<tr><td class="left"><code>t_strat</code></td><td class="left">Stratospheric temperature</td><td class="right">200</td></tr>
+<tr><td class="left"><code>delh</code></td><td class="left">Equator to pole temperature difference</td><td class="right">60</td></tr>
+<tr><td class="left"><code>delv</code></td><td class="left">Delta Theta per scale height</td><td class="right">10</td></tr>
+<tr><td class="left"><code>eps</code></td><td class="left">Hemispheric assymetry</td><td class="right">0</td></tr>
+<tr><td class="left"><code>sigma_b</code></td><td class="left">Boundary layer sigma</td><td class="right">0.7</td></tr>
+<tr><td class="left"><code>ka</code></td><td class="left">Newtonian damping in free atmos</td><td class="right">-40</td></tr>
+<tr><td class="left"><code>ks</code></td><td class="left">Newtonian damping in boundary layer</td><td class="right">-4</td></tr>
+<tr><td class="left"><code>kf</code></td><td class="left">Rayleigh damping in boundary layer</td><td class="right">-1</td></tr>
+<tr><td class="left"><code>do_conserve_energy</code></td><td class="left">Converves energy dissipated via</td><td class="right">.true.</td></tr>
+<tr><td class="left"></td><td class="left">Rayleigh damping (and other momentum</td><td class="right"></td></tr>
+<tr><td class="left"></td><td class="left">forcings) by heating.</td><td class="right"></td></tr>
+</tbody>
+</table>
+
+
+<p>
+The damping rates k are given in units of days if negative. Not sure
+about units if positive, but probably days<sup>-1</sup>. Temperatures are all in
+Kelvin.
+</p>
+<p>
+<code>do_conserve_energy</code> does not really affect the solution to the
+<code>local_forcing</code>-type problems. Both have been tested with minimal
+differences (&lt;5% difference).
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Local Momentum Forcing</h3>
+<div class="outline-text-3" id="text-3-5">
+
+<p>This is my custom code documentation. I have added this behaviour to
+<code>hs_forcing_zonalacc.F90</code>, which replaces <code>hs_forcing.F90</code> (using a
+symbolic link). The namelist parameters go into the <code>hs_forcing</code>
+namelist. All options are prefixed with <code>local_forcing</code> and are given
+here:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" /><col class="right" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left"><code>local_forcing*</code></th><th scope="col" class="left">meaning</th><th scope="col" class="left">units</th><th scope="col" class="right">default</th></tr>
+</thead>
+<tbody>
+<tr><td class="left"><code>_option</code></td><td class="left">Defines the forcing mode</td><td class="left"></td><td class="right">''</td></tr>
+<tr><td class="left"><code>_xwidth</code></td><td class="left">Longitudinal half-width</td><td class="left">degrees</td><td class="right">10</td></tr>
+<tr><td class="left"><code>_ywidth</code></td><td class="left">Latitudinal half-width</td><td class="left">degrees</td><td class="right">10</td></tr>
+<tr><td class="left"><code>_ycenter</code></td><td class="left">Central latitude</td><td class="left">degrees</td><td class="right">0</td></tr>
+<tr><td class="left"><code>_zwidth</code></td><td class="left">Half-width in height</td><td class="left">scale height</td><td class="right">0.5</td></tr>
+<tr><td class="left"><code>_zcenter</code></td><td class="left">Central height.</td><td class="left">scale height</td><td class="right">2.2</td></tr>
+<tr><td class="left"><code>_amp</code></td><td class="left">Amplitude of forcing.</td><td class="left">m/s/day</td><td class="right">1</td></tr>
+<tr><td class="left"><code>_start</code></td><td class="left">Start time of forcing.</td><td class="left">days</td><td class="right">-1</td></tr>
+<tr><td class="left"><code>_end</code></td><td class="left">End time of forcing.</td><td class="left">days</td><td class="right">-1</td></tr>
+</tbody>
+</table>
+
+
+<p>
+<code>local_forcing_start</code> and <code>local_forcing_end</code> allow control of when
+the forcing is turned on and off. A value of -1 (the default) removes
+that time constraint. For example, switching on from 100 days would
+give <code>local_forcing_start = 100</code> and <code>local_forcing_end = -1</code>.
+</p>
+<p>
+<code>local_forcing_option</code> is a string and can have several values:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left"><code>local_forcing_option</code></th><th scope="col" class="left">meaning</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">''</td><td class="left">No forcing. The <code>local_forcing</code> code is not run.</td></tr>
+<tr><td class="left">'Cos2Dipole'</td><td class="left">A two-signed forcing in the vertical.</td></tr>
+<tr><td class="left"></td><td class="left">For positive amplitude, negative forcing is</td></tr>
+<tr><td class="left"></td><td class="left">on the top and positive forcing is on the</td></tr>
+<tr><td class="left"></td><td class="left">bottom. The forcing has the form</td></tr>
+<tr><td class="left"></td><td class="left">cos(x)<sup>2</sup> cos(y)<sup>2</sup> sin(z)</td></tr>
+<tr><td class="left">'CosDipole'</td><td class="left">Vertical structure as above, but with</td></tr>
+<tr><td class="left"></td><td class="left">cos(x) cos(y) horizontal structure.</td></tr>
+<tr><td class="left">'Cos2Single'</td><td class="left">Single signed forcing (cos(z) vertical)</td></tr>
+<tr><td class="left">'CosSingle'</td><td class="left">&ndash; ditto &ndash;</td></tr>
+<tr><td class="left">'CosDipoleZM'</td><td class="left">Zonal mean CosDipole &ndash; <a href="#sec-3-5-1">Zonal mean caveats</a></td></tr>
+<tr><td class="left">'Cos2DipoleZM'</td><td class="left">Zonal mean Cos2Dipole &ndash;  <a href="#sec-3-5-1">Zonal mean caveats</a></td></tr>
+</tbody>
+</table>
+
+
+
+</div>
+
+<div id="outline-container-3-5-1" class="outline-4">
+<h4 id="sec-3-5-1"><span class="section-number-4">3.5.1</span> Zonal mean caveats</h4>
+<div class="outline-text-4" id="text-3-5-1">
+
+<p><code>local_forcing_amp</code> in the *ZM cases is the peak zonal mean forcing but
+in the other cases, it is the peak local amplitude. Here's a
+calculator that works out the equivalent local amplitude equivalent to
+the zonal mean case (i.e. with same zonal mean), and to get the
+10S-10N equivalent amplitude,
+</p>
+
+
+
+<pre class="example">from numpy import *
+Lx = 30 # degrees
+Ly = 10 # degrees
+A = 0.3 # zonal mean amplitude
+
+x = linspace(-180, 180, 5000)
+y = linspace(-10, 10, 100)
+
+f = cos(0.5 * pi * x / Lx) * cos(0.5 * pi * y[:,None] / Ly) \
+    * ((abs(x) &lt; Lx) &amp; (abs(y[:,None]) &lt; Ly))
+f *= A / f.mean(axis=-1).max()
+print 'zonal mean amplitude, A     ', f.mean(axis=-1).max()
+print '10N-10S zonal mean amplitude', f.mean()
+print 'local amplitude             ', f.max()
+print '10N-10S local amplitude     ', f.mean(axis=0).max()
+print 'Theoretical local amplitude ', A * pi * 360 / (4. * Lx)  
+
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Local Heating</h3>
+<div class="outline-text-3" id="text-3-6">
+
+<p>The base version of <code>hs_forcing.F90</code> includes Isidoro's local
+heating. In my version, I've removed this and replaced it my a local
+heating routine that mirrors the local forcing routine. All namelist
+variables do the same thing here as they do for local forcing and have
+the same defaults, but are named <code>local_heating_xxxx</code> in place of
+<code>local_forcing_xxxx</code>.
+</p>
+<p>
+The only difference is that <code>local_heating_amp</code> is in units of K/day.
+</p>
+<p>
+See above for all <code>local_forcing</code> settings.
+</p></div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2013-08-26 16:34:56 EDT</p>
+<p class="author">Author: Thomas Flannagan</p>
+<p class="creator">Org version 7.8.11 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
