@@ -1,13 +1,10 @@
 ---
-name: interpolation
-date: 23/02/13
-keywords:
+tags:
  - python
  - matplotlib
  - programming
-parent: postlist_full
 title: Interpolation in pure python
-template: post
+layout: post
 ---
 
 A long while ago, I wrote a script for
@@ -22,7 +19,7 @@ divergence and convergence (principally caused by convection over the
 western Pacific and subsidence over the eastern Pacific.)
 
 <div class="thumbnail">
-<img alt="Example of streamplot" src="{{ url('wind_example.jpg') }}" />
+<img alt="Example of streamplot" src="/assets/wind_example.jpg" />
 </div>
 
 The `streamplot` algorithm uses an adaptive 1st/2nd order
@@ -49,8 +46,9 @@ restrict ourselves to a regular grid with spacing `dx` as we can then
 find the index `i` of the point just above `x0` by rescaling and
 casting to an integer
 
-    --- language: python ---
-	i = int(1 + (x0 - x[0]) / dx)
+{% highlight python %}
+i = int(1 + (x0 - x[0]) / dx)
+{% endhighlight %}
 
 I thought this was probably the fastest way of implementing an
 interpolator and so used this technique to implement the interpolator
@@ -67,8 +65,9 @@ search is needed to find the smallest `i` such that `x[i] > x0`. Any
 pure python search algorithm would be too slow. Using `argmax` to do a
 linear search is an option:
 
-    --- language: python ---
-	i = numpy.argmax(x[i] > x0)
+{% highlight python %}
+i = numpy.argmax(x[i] > x0)
+{% endhighlight %}
 
 However, this does not scale well with the length of each dimension
 and is too slow in this context. 
@@ -79,8 +78,9 @@ module which implements the
 for searching ordered lists and arrays -- exactly what I needed
 to do.  Implementing this search is really simple; it's just
 
-    --- language: python ---
-	i = bisect.bisect(x, x0)
+{% highlight python %}
+i = bisect.bisect(x, x0)
+{% endhighlight %}
 
 This method is really fast -- way faster than I expected. After
 re-implementing the streamplot integrator and interpolator to use this
@@ -90,7 +90,7 @@ Here is an example of the new script in action with a very
 non-uniform vertical grid spacing:
 
 <div class="thumbnail">
-<img alt="Example with uneven grid" src="{{ url('walker.jpg') }}" />
+<img alt="Example with uneven grid" src="/assets/walker.jpg" />
 </div>
 
 (This plot shows the boreal winter average zonal and vertical winds in

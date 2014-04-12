@@ -1,13 +1,10 @@
 ---
-name: run-or-focus
-date: 13/02/13
-keywords:
+tags:
  - gnome
  - linux
  - programming
-parent: postlist_full
 title: Keyboard shortcuts and focus
-template: post
+layout: post
 ---
 
 I like having custom keyboard shortcuts to launch applications (mainly
@@ -21,14 +18,15 @@ up with Chrome windows on all of my desktops -- quite annoying!
 
 This script deals with this problem:
 
-    --- language: bash ---
-    #!/usr/bin/bash
+{% highlight bash %}
+#!/usr/bin/bash
 
-    test=`wmctrl -l | grep "$1" `
-	if [ -z "$test" ] ; then
-        $2
-    fi
-    wmctrl -R "$1"
+test=`wmctrl -l | grep "$1" `
+if [ -z "$test" ] ; then
+    $2
+fi
+wmctrl -R "$1"
+{% endhighlight %}
 	
 I have named this `run_or_focus` as it checks to see if the application
 has any open windows; if it does not, it will execute the application,
@@ -39,7 +37,8 @@ windows. The second is the application name.
 
 The keyboard shortcut command for Google Chrome is then
 
-    --- language: sh ---
-    run_or_focus "Google Chrome" google-chrome
+{% highlight bash %}
+run_or_focus "Google Chrome" google-chrome
+{% endhighlight %}
 
 This works like a treat.

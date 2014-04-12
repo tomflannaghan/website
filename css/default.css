@@ -3,3 +3,10 @@
     /* background: can't go here due to template */
     height: 150px; 
 }
+
+/* Post content */
+ul.postlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}

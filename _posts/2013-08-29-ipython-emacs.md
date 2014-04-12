@@ -1,13 +1,10 @@
 ---
-name: ipython-emacs
-date: 29/08/13
-keywords:
+tags:
  - emacs
  - python
  - programming
-parent: postlist_full
 title: ipython and different emacs versions
-template: post
+layout: post
 ---
 
 I use `ipython` and `emacs` to do almost all of my data analysis work,
