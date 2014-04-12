@@ -3,7 +3,6 @@ tags:
  - emacs
  - latex
  - programming
-parent: postlist_full
 title: Custom command highlighting in emacs
 layout: post
 ---
