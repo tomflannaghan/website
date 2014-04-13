@@ -1,0 +1,40 @@
+---
+title: Publications
+layout: default
+---
+
+<ul class="publist">
+  {% for paper in site.data.papers %}
+  <li><p>
+    {{ paper.authors }} ({{ paper.year }}),
+    {% if paper.url %}
+      <a href="{{paper.url}}">{{paper.title}}</a>,
+    {% else %}
+      {{paper.title}},
+    {% endif %}
+    <i>{{paper.journal}}</i>, {{paper.rest}}
+    {% if paper.pdf %}
+      <a class="label label-primary" href="{{paper.pdf}}">pdf</a>
+    {% endif %}
+  </p></li>
+  {% endfor %}
+</ul>
+
+<h1>Selected Talks and Posters</h1>
+
+<ul class="publist">
+  {% for paper in site.data.talks %}
+  <li><p>
+    {{ paper.authors }} ({{ paper.year }}),
+    {% if paper.url %}
+      <a href="{{paper.url}}">{{paper.title}}</a>,
+    {% else %}
+      {{paper.title}},
+    {% endif %}
+    <i>{{paper.meeting}}</i>, {{paper.location}}
+    {% if paper.pdf %}
+      <a class="label label-primary" href="{{paper.pdf}}">pdf</a>
+    {% endif %}
+  </p></li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,44 @@
+# my publications. used by pub.html.
+
+- authors: <b>Flannaghan, T. J.</b> and S. Fueglistaler
+  title: Vertical mixing and the temperature and wind structure of the tropical tropopause layer
+  year: 2014
+  url: http://journals.ametsoc.org/doi/abs/10.1175/JAS-D-13-0321.1
+  journal: J. Atmos. Sci.
+  rest: (accepted, in early online release) 
+  pdf: /assets/mixing_pub.pdf
+
+- authors: Fueglistaler, S., Y. S. Liu, <b>T. J. Flannaghan</b>, F. Ploeger, and P. H. Haynes
+  title: Departure from Clausius-Clapeyron scaling of water entering the stratosphere in response to changes in tropical upwelling
+  year: 2014
+  url: http://onlinelibrary.wiley.com/doi/10.1002/2013JD020772/abstract
+  journal: J. Geophys. Res. Atmos.
+  rest: 119, 1962-1972, doi:10.1002/2013JD020772
+
+- authors: <b>Flannaghan, T. J.</b> and S. Fueglistaler
+  title: The importance of background state for the climatology of equatorial Kelvin wave propagation into the stratosphere
+  year: 2013
+  url: http://onlinelibrary.wiley.com/doi/10.1002/jgrd.50418/abstract
+  journal: J. Geophys. Res. Atmos.
+  rest: 118, 5160-5175, doi:10.1002/jgrd.50418
+
+- authors: Fueglistaler, S., Y.S. Liu, <b>T. J. Flannaghan</b>, P.H. Haynes, D.P. Dee, W.J. Read, E.E. Remsberg, L.W. Thomason, D.F. Hurst, J.R. Lanzante, P.F. Bernath
+  title: The relation between atmospheric humidity and temperature trends for stratospheric water
+  year: 2013
+  url: http://onlinelibrary.wiley.com/doi/10.1002/jgrd.50157/full
+  journal: J. Geophys. Res. Atmos.
+  rest: 118, 1052-1074, doi:10.1002/jgrd.50157.
+
+- authors: <b>Flannaghan, T. J.</b> and S. Fueglistaler
+  title: Tracking Kelvin waves from the equatorial troposphere into the stratosphere
+  year: 2012
+  url: http://onlinelibrary.wiley.com/doi/10.1029/2012JD017448/abstract
+  journal: J. Geophys. Res. Atmos.
+  rest: 117, D21108, doi:10.1029/2012JD017448
+
+- authors: <b>Flannaghan, T. J.</b> and S. Fueglistaler
+  title: Kelvin waves and shear-flow turbulent mixing in the TTL in (re-)analysis data
+  year: 2011
+  url: http://onlinelibrary.wiley.com/doi/10.1029/2010GL045524/abstract
+  journal: Geophys. Res. Lett.
+  rest: 38, L02801, doi:10.1029/2010GL045524

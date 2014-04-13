@@ -1,11 +1,11 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation">
   <div class="hidden-xs mybanner span12" 
        style="background: url(/assets/header.png)">
   </div>
 
   <div class="navbar-header"
-       style="background: url(assets/header.png); background-position: 0px -60px;">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="background-color: white">
+       style="background: url(/assets/header.png); background-position: 0px -60px;">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="background-color: #808080">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -16,11 +16,16 @@
   <div class="container">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   <ul class="nav navbar-nav">
+    {% strip %}
     {% for entry in site.data.navigation.main_menu %}
     {% assign menutext = entry %}
       {% for node in site.pages %}
         {% if node.url == entry %}
-          {% assign menutext = node.title %}
+          {% if node.menutitle %}
+            {% assign menutext = node.menutitle %}
+          {% else %}
+            {% assign menutext = node.title %}
+          {% endif %}
         {% endif %}
       {% endfor %}
     {% if page.url == entry %}
@@ -31,6 +36,7 @@
 	  <a href="{{ entry }}">{{ menutext }}</a>
     </li>
     {% endfor %}
+    {% endstrip %}
   </ul>
   </div>
   </div>

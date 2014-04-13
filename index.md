@@ -6,7 +6,6 @@ layout: default
 <div class="row">
 <div class="col-sm-3 col-sm-push-9">
 <img src="/assets/me.jpg" alt="Me!" class="img-thumbnail" /> <br/>
-<a href="mailto:tomflannaghan@gmail.com">tomflannaghan@gmail.com</a>
 </div>
 <div class="col-sm-9 col-sm-pull-3" markdown="1">
 
@@ -23,6 +22,11 @@ enjoy working with other languages (in particular,
 
 I also love cycling, and at the moment ride with the
 [Princeton Freewheelers](http://princetonfreewheelers.com/).
+
+<a href="mailto:tomflannaghan@gmail.com" class="btn btn-default btn-sm">
+<span class="glyphicon glyphicon-envelope"></span> tomflannaghan@gmail.com
+</a>
+
 
 </div>
 </div>
