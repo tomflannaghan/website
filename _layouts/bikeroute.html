@@ -15,12 +15,14 @@
     
     <div class="container">
       <h1>{{page.title}}</h1>
-     
+      
       {{ content }}
+
+      <p><b>Stats:</b> {{page.distance}}km total distance, {{page.climb}}m climbing.</p>
 
       <p>
         <!-- download links -->
-        Download the route in <a href="{{page.gpx}}">GPX</a> or 
+        Download <a href="{{page.gpx}}">GPX</a> or 
         <a href="{{page.kml}}">KML</a>. 
         <!-- elevation toggle -->
         <a class="btn btn-sm btn-default" 
@@ -33,7 +35,6 @@
       <!-- map -->
       <div id="map" class="mainmap"></div>
       <br>
-      
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

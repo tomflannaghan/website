@@ -10,7 +10,7 @@
     </Style>
     <LineString>
       <alititudeMode>clampToGround</alititudeMode>
-      <coordinates>{coords}</coordinates>
+      <coordinates>%{coords}</coordinates>
     </LineString>
   </Placemark>
 </kml>
