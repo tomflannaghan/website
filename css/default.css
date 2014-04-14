@@ -1,7 +1,7 @@
 /* The header decorative banner that currently has the nerdy image. */
 .mybanner {
     /* background: can't go here due to template */
-    height: 150px; 
+    height: 100px; 
 }
 
 /* Post content */
