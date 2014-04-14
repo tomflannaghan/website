@@ -19,9 +19,18 @@
       {{ content }}
 
       <p>
-        Download the route in <a href="{{page.gpx}}">GPX</a> or <a href="{{page.kml}}">KML</a>. <a class="btn btn-sm btn-default" data-toggle="collapse" data-target="#viewelevation">View elevation profile &raquo;</a>
+        <!-- download links -->
+        Download the route in <a href="{{page.gpx}}">GPX</a> or 
+        <a href="{{page.kml}}">KML</a>. 
+        <!-- elevation toggle -->
+        <a class="btn btn-sm btn-default" 
+           data-toggle="collapse" data-target="#viewelevation">
+          View elevation profile &raquo;</a>
       </p>
-      <img class="collapse" id="viewelevation" style="width:100%; max-width: 700px" alt="altitude profile" src="{{page.altimage}}">
+      <!-- elevation profile -->
+      <img class="collapse elevation-profile" id="viewelevation"  
+           alt="altitude profile" src="{{page.altimage}}">
+      <!-- map -->
       <div id="map" class="mainmap"></div>
       <br>
       

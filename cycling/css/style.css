@@ -10,3 +10,8 @@
 .olControlAttribution {
     bottom: 5px;
 }
+
+.elevation-profile {
+    width: 100%; 
+    max-width: 700px
+}
