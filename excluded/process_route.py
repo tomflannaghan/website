@@ -1,12 +1,22 @@
+"""This python script processes a GPX file and returns a KML file, an
+altitude profile image and some metadata. 
+
+All files are specified as arguments to the script.
+
+The only output on stdout is a JSON encoded metadata.
+"""
+
 import sys
 import gpxpy
 import os
 import pylab
 import numpy
+import json
 
-#argv = ["./cycling/gpx/20-mi-loop.gpx",
-#        "./cycling/kml/20-mi-loop.kml",
-#        "./cycling/alt/20-mi-loop.svg"]
+## returned to ruby using json
+return_data = {}
+
+## file names supplied by Ruby.
 gpx_file, kml_file, alt_file = sys.argv[1:]
 
 ###### read GPX 
@@ -36,6 +46,10 @@ dist = numpy.r_[[0], numpy.cumsum(6371 * c)]
 delta_ele = ele[1:] - ele[:-1]
 total_ele = (delta_ele * (delta_ele > 0)).sum()
 
+######## return data
+return_data['total_ele'] = total_ele
+return_data['distance'] = dist[-1]
+
 ######## elevation figure
 pylab.figure(1, figsize=(10,2))
 pylab.clf()
@@ -54,3 +68,6 @@ kml =  template.format(
     coords=' '.join(["%f,%f" % (lo, la) for lo, la in zip(lon, lat)]))
 open(kml_file, 'w').write(kml)
 
+####### Output return data
+json_string = json.dumps(return_data)
+print json_string

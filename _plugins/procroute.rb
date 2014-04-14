@@ -1,5 +1,6 @@
 # Processes a route defined by a KML file, producing a GPX file (and
 # other things).
+require 'json'
 
 module Jekyll
   class ProcessRoutes < Generator
@@ -22,14 +23,15 @@ module Jekyll
         if not File.exist?(gpx_fs)
           raise "No GPX file found at #{gpx_fs}\n"
         end
-        if (not File.exist?(kml_fs)) or (File.mtime(gpx_fs) > File.mtime(kml_fs))
-          print "Generating #{kml_fs}...\n"
-          wasGood = system("python excluded/process_route.py \"#{gpx_fs}\" \"#{kml_fs}\" \"#{alt_fs}\"")
-          raise "KML generation failed." if not wasGood
-        end
+        print "Generating #{kml_fs}...\n"
+        returns = %x( python excluded/process_route.py "#{gpx_fs}" "#{kml_fs}" "#{alt_fs}" )
+        return_data = JSON.parse(returns)
+        
         post.data['kml'] = kml
         post.data['gpx'] = gpx
         post.data['altimage'] = alt
+        post.data['distance'] = return_data['distance'].round
+        post.data['climb'] = return_data['total_ele'].round
       end
     end
     
