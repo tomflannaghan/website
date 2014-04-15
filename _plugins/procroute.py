@@ -8,6 +8,7 @@ import os
 import pylab
 import numpy
 import json
+import scipy.interpolate
 
 input_data = json.load(sys.stdin)
 for route_data in input_data:
