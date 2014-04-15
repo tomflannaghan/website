@@ -1,3 +1,10 @@
 highlighter: pygments
 encoding: utf-8
-exclude: [bootstrap-3.1.1, excluded]
+exclude: [bootstrap-3.1.1, excluded, publish.sh]
+
+url: http://www.flannaghan.com
+
+sitemap:
+  include_posts:
+    - /cycling/index.html
+    - /postlist_full.html
