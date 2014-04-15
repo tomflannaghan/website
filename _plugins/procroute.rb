@@ -29,9 +29,6 @@ module Jekyll
         if not File.exist?(gpx_fs)
           raise "No GPX file found at #{gpx_fs}\n"
         end
-        if File.exist?(kml_fs) and File.mtime(kml_fs) >= File.mtime(gpx_fs)
-          next
-        end
         print "Generating #{kml_fs}...\n"
         
         ## initialize metadata that will be gathered
