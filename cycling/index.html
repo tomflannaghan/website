@@ -4,17 +4,18 @@ menutitle: Cycling
 layout: default
 ---
 
-<h2> Routes </h2>
+<h2>Around Princeton, NJ</h2>
 
 <ul class="postlist">
-  {% for post in site.posts %}
-  {% if post.categories contains "cycling" %} 
+  {% for post in site.categories["cycling"] %}
+  {% if post.location == "princeton" %}
   <li>
     <h3><a href="{{post.url}}">{{post.title}}</a> 
-      <small><i>{{ post.location }}, {{ post.distance }}km, {{ post.climb}}m climbing</i></small></h3>
+      <small><i>{{ post.distance }}km, {{ post.climb}}m climbing</i></small></h3>
     <p>
-      {{ post.excerpt | remove: '<p>' | remove: '</p>' }}
-      {% if post.excerpt != post.content %}
+      {% assign excerpt = post.content | split:'<!--more-->' | first %}
+      {{ excerpt | remove: '<p>' | remove: '</p>' }}
+      {% if excerpt != post.content %}
         <a class="label label-default" href="{{post.url}}">Read more</a>
       {% endif %}
     </p>

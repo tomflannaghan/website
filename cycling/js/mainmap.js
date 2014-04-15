@@ -3,7 +3,7 @@
 var map;
 
 function init(mapid, kmlfile){
-    map = new OpenLayers.Map(mapid);
+    map = new OpenLayers.Map(mapid, {theme: null});
     
     var osm = new OpenLayers.Layer.OSM(
         "OpenCycleMap",

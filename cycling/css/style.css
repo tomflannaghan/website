@@ -4,12 +4,6 @@
     height: 300px;
     border: 1px solid black;
 }
-.olPopup p { margin:0px; font-size: .9em;}
-.olPopup h2 { font-size:1.2em; }
-
-.olControlAttribution {
-    bottom: 5px;
-}
 
 .elevation-profile {
     width: 100%; 
