@@ -37,9 +37,17 @@ module Jekyll
         coords_for_kml = ""
         elevation_profile_data = []
         total_distance = 0
-
+        
+        ## first, simplify the gpx file
+        tmp_fs = "./tmp/working.gpx"
+        error = 0.001  ## accepted error in distance. 0.1% gives good results.
+        wasGood = system("gpsbabel -i gpx -f #{gpx_fs} -x  simplify,error=#{error} -o gpx -F #{tmp_fs}")
+        if not wasGood
+          raise "GPSBabel failed to simplify #{gpx_fs}."
+        end
+        
         ## process the gpx file and calculate metadata
-        gpx = GPX::GPXFile.new(:gpx_file => gpx_fs)
+        gpx = GPX::GPXFile.new(:gpx_file => tmp_fs)
         track = gpx.tracks[0]
         track.segments.each do |segment|
           segment.points.each do |point|
