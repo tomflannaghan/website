@@ -41,9 +41,10 @@ module Jekyll
         ## first, simplify the gpx file
         tmp_fs = "./tmp/working.gpx"
         error = 0.001  ## accepted error in distance. 0.1% gives good results.
-        wasGood = system("gpsbabel -i gpx -f #{gpx_fs} -x  simplify,error=#{error} -o gpx -F #{tmp_fs}")
+        cmd = "gpsbabel -i gpx -f #{gpx_fs} -x  simplify,error=#{error} -o gpx -F #{tmp_fs}"
+        wasGood = system(cmd)
         if not wasGood
-          raise "GPSBabel failed to simplify #{gpx_fs}."
+          raise "GPSBabel failed to simplify '#{gpx_fs}'. Command was 'gpsbabel -i gpx -f #{gpx_fs} -x  simplify,error=#{error} -o gpx -F #{tmp_fs}'"
         end
         
         ## process the gpx file and calculate metadata

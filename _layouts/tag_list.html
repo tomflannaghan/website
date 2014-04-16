@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+{{ content }}
+
+<ul class="postlist">
+  {% for post in site.tags[page.show_tag] %}
+  <li>
+    <h3><a href="{{post.url}}">{{post.title}}</a> 
+      <small><i>{{ post.date | date: "%-d %B %Y" }}</i></small></h3>
+    <p>
+      {{ post.excerpt | remove: '<p>' | remove: '</p>' }}
+      {% if post.excerpt != post.content %}
+      <a class="label label-default" href="{{post.url}}">Read more</a>
+      {% endif %}
+    </p>
+  </li>
+  {% endfor %}
+</ul>
