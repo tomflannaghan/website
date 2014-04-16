@@ -2,6 +2,7 @@
 # other things).
 require 'json'
 require 'gpx'
+require 'tempfile'
 
 module Jekyll
   class ProcessRoutes < Generator
@@ -38,8 +39,10 @@ module Jekyll
         elevation_profile_data = []
         total_distance = 0
         
-        ## first, simplify the gpx file
-        tmp_fs = "./tmp/working.gpx"
+        ## first, simplify the gpx file. we need a temp file.
+        tmp_fs = Dir::Tmpname.create(['working', '.gpx']) { |f| 
+          raise Errno::EEXIST if File.exist? f 
+        }
         error = 0.001  ## accepted error in distance. 0.1% gives good results.
         cmd = "gpsbabel -i gpx -f #{gpx_fs} -x  simplify,error=#{error} -o gpx -F #{tmp_fs}"
         wasGood = system(cmd)
@@ -66,6 +69,9 @@ module Jekyll
             last_point = point
           end
         end
+        
+        ## unlink the temporary file
+        File.unlink(tmp_fs)
         
         ## write the KML file.
         f = File.open(kml_fs, 'w')
