@@ -1,0 +1,89 @@
+#VIKING GPS Data file http://viking.sf.net/
+FILE_VERSION=1
+
+xmpp=64.000000
+ympp=64.000000
+lat=52.540620
+lon=-0.559659
+mode=mercator
+color=#cccccc
+highlightcolor=#eea500
+drawscale=t
+drawcentermark=t
+drawhighlight=t
+
+~Layer Map
+name=Map
+mode=17
+directory=/home/splash/tflannag/.viking-maps/
+alpha=255
+autodownload=f
+adlonlymissing=f
+mapzoom=0
+~EndLayer
+
+
+~Layer TrackWaypoint
+name=TrackWaypoint
+tracks_visible=t
+waypoints_visible=t
+routes_visible=t
+drawmode=0
+trackcolor=#000000
+drawlines=t
+line_thickness=1
+drawdirections=f
+trkdirectionsize=5
+drawpoints=t
+trkpointsize=2
+drawelevation=f
+elevation_factor=30
+drawstops=f
+stop_length=60
+bg_line_thickness=0
+trackbgcolor=#ffffff
+speed_factor=30.000000
+drawlabels=t
+wpfontsize=3
+wpcolor=#000000
+wptextcolor=#ffffff
+wpbgcolor=#8383c4
+wpbgand=t
+wpsymbol=0
+wpsize=4
+wpsyms=t
+drawimages=t
+image_size=64
+image_alpha=255
+image_cache_size=300
+
+
+~LayerData
+type="waypointlist"
+type="waypointlistend"
+type="route" name="Route" color=#ff0000
+type="routepoint" latitude="52.236645225048214" longitude="0.11188056766508225"
+type="routepoint" latitude="52.270692882516869" longitude="0.11394050418851975"
+type="routepoint" latitude="52.294006746711858" longitude="0.082354810829144753"
+type="routepoint" latitude="52.320351342920119" longitude="0.060038831825238503"
+type="routepoint" latitude="52.35349595604977" longitude="0.042357709999066628"
+type="routepoint" latitude="52.38231994795958" longitude="-0.014290544395464622"
+type="routepoint" latitude="52.407145901220844" longitude="-0.088448259239214622"
+type="routepoint" latitude="52.439492945090187" longitude="-0.1129958361435115"
+type="routepoint" latitude="52.471816258945069" longitude="-0.26113960445405837"
+type="routepoint" latitude="52.462299560077881" longitude="-0.32963249385835525"
+type="routepoint" latitude="52.469411133750633" longitude="-0.36173317134858962"
+type="routepoint" latitude="52.471711691016438" longitude="-0.40653679073335525"
+type="routepoint" latitude="52.488125813192909" longitude="-0.462498399620074"
+type="routepoint" latitude="52.515086040142933" longitude="-0.496830675010699"
+type="routepoint" latitude="52.53346802731798" longitude="-0.57939979732515212"
+type="routepoint" latitude="52.555077907705304" longitude="-0.6156203478622615"
+type="routepoint" latitude="52.589923595017375" longitude="-0.67656013668062087"
+type="routepoint" latitude="52.609003952240059" longitude="-0.68823311031343337"
+type="routepoint" latitude="52.64068191606205" longitude="-0.70677253902437087"
+type="routepoint" latitude="52.761088085834821" longitude="-0.884098741416949"
+type="routepoint" latitude="52.761088085834821" longitude="-0.884098741416949"
+type="routeend"
+~EndLayerData
+~EndLayer
+
