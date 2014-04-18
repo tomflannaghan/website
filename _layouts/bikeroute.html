@@ -51,43 +51,7 @@
             <h4 class="modal-title">Turn by turn navigation on Android</h4>
           </div>
           <div class="modal-body">
-            <p>First, we need to install and set up the GPS mapping
-            software. This part only needs to be done once.
-            </p>
-            <ol>
-              <li>Install <a href="https://play.google.com/store/apps/details?id=net.osmand">OsmAnd</a>. It's a great app with all the features we need.
-              </li>
-              <li>Launch OsmAnd, and go
-                to <code>Settings->Navigation->Voice Guidance</code>
-                and select your language.
-              </li>
-              <li>In <code>Settings->Data Management</code> download
-                the maps for the area you are interested in (e.g. your
-                country or state).
-              </li>
-            </ol>
-            <p>Next, we need to get the route into the phone. This is
-              best done when the phone is connected to a PC rather
-              than directly on the phone.</p>
-            <ol>
-              <li><a href="{{page.gpx}}">Download the GPX file</a> for
-              this route.</li>
-              <li>Copy the GPX file to <code>osmand/tracks</code> on
-              the phone's sd card. You may need to make
-              the <code>tracks</code> directory yourself.</li>
-              <li>Launch OsmAnd and go to the map.</li>
-              <li>Click the menu button (three lines on top of each other).
-              </li>
-              <li>Click <code>Map Layers</code> and then <code>GPX
-              track...</code>. Select the track from the list. It
-              should now display on the map.</li>
-              <li>Finally, click the menu button again, and
-              click <code>Directions</code>. Answer yes to the dialog
-              that pops up, and then to actually start the navigation,
-              press the blue triangle symbol in the bottom right
-              corner.</li>
-            </ol>
-            <p>All done. Enjoy your ride :-)</p>      
+            {% include android-nav.html %}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
