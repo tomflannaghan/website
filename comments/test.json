@@ -1,0 +1,5 @@
+{
+    "meow": "hello", 
+    "fred": "baz",
+    "evil": "<script>alert('bad stuff');</script>"
+}
