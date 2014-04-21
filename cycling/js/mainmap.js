@@ -5,11 +5,7 @@ var map;
 function init(mapid, kmlfile){
     map = new OpenLayers.Map(mapid, {theme: null});
     
-    var osm = new OpenLayers.Layer.OSM(
-        "OpenCycleMap",
-        ["http://a.tile.opencyclemap.org/cycle/${z}/${x}/${y}.png",
-         "http://b.tile.opencyclemap.org/cycle/${z}/${x}/${y}.png",
-         "http://c.tile.opencyclemap.org/cycle/${z}/${x}/${y}.png"]);
+    var osm = new OpenLayers.Layer.OSM();
     
     var kmlLayer = new OpenLayers.Layer.Vector("KML", {
         projection: map.displayProjection,
