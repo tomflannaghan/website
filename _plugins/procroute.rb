@@ -60,6 +60,9 @@ module Jekyll
               next
             end
             ## accumulate the metadata information needed.
+            if point.elevation.nil? # sometimes elevation is missing (e.g. Fens)
+              point.elevation = 0
+            end
             if point.elevation > last_point.elevation
               total_climb += point.elevation - last_point.elevation
             end
