@@ -4,16 +4,18 @@ menutitle: Cycling
 layout: default
 ---
 
-
-<div class="well">
-<p>I have cycled in various places around the world, and so my bike
-routes are organised according to location:</p>
+<p>I have spent lots of time cycling around New Jersey, Hampshire,
+Cambridgeshire (and the UK in general). This page collects my
+favourite rides, and I plan on adding to it whenever I find a new ride
+or have time to document an old one. The routes are organised
+according to location:</p>
 <ul>
 {% for loc in site.data.cycling_locations %}
 <li><a href="#{{loc.name}}">{{loc.title}}</a></li>
 {% endfor %}
 </ul>
-</div>
+<p>Enjoy the rides :-)</p>
+
 
 {% for loc in site.data.cycling_locations %}
 <a name="{{loc.name}}"></a><h2>{{loc.title}}</h2>
@@ -23,7 +25,7 @@ routes are organised according to location:</p>
   {% if post.location == loc.name %}
   <li>
     <h3><a href="{{post.url}}">{{post.title}}</a> 
-      <small><i>{{ post.distance }}km, {{ post.climb}}m climbing</i></small></h3>
+      <small><i>{{ post.distance }} km</i></small></h3>
     <p>
       {% assign excerpt = post.content | split:'<!--more-->' | first %}
       {{ excerpt | remove: '<p>' | remove: '</p>' }}
