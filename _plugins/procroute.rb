@@ -13,12 +13,16 @@ module Jekyll
       ## accumulate input to the python script for graph plotting
       python_input = []
       
-      site.categories["cycling"].each do |post|
-        if not post.data['route']
-          raise "No route variable found for #{post.name}.\n"
+      site.pages.each do |page|
+        ## Ignore pages outside of the /cycling/routes folder
+        if  ( ! ( page.url =~ /^\/cycling\/routes\// ) )
           next
         end
-        route = post.data['route']
+        
+        if not page.data['route']
+          raise "No route variable found for #{page.name}.\n"
+        end
+        route = page.data['route']
         kml_file = "/cycling/kml/#{route}.kml"
         gpx_file = "/cycling/gpx/#{route}.gpx"
         alt_file = "/cycling/alt/#{route}.svg"
@@ -88,11 +92,12 @@ module Jekyll
           :alt_file => alt_fs}
         push_static_file(site, alt_fs) ## ok to do before file created.
         
-        post.data['kml'] = kml_file
-        post.data['gpx'] = gpx_file
-        post.data['altimage'] = alt_file
-        post.data['distance'] = track.distance.round
-        post.data['climb'] = total_climb.round
+        page.data['kml'] = kml_file
+        page.data['gpx'] = gpx_file
+        page.data['altimage'] = alt_file
+        page.data['distance'] = track.distance.round
+        page.data['climb'] = total_climb.round
+        page.data['bikeroute'] = "yes" ## this is used to enumerate rides.
       end
       
       ## finally call the python to actually generate images.

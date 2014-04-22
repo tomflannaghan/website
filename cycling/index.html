@@ -21,16 +21,16 @@ according to location:</p>
 <a name="{{loc.name}}"></a><h2>{{loc.title}}</h2>
 
 <ul class="postlist">
-  {% for post in site.categories["cycling"] %}
-  {% if post.location == loc.name %}
+  {% for ride in site.pages %}
+  {% if ride.location == loc.name and ride.bikeroute %}
   <li>
-    <h3><a href="{{post.url}}">{{post.title}}</a> 
-      <small><i>{{ post.distance }} km</i></small></h3>
+    <h3><a href="{{ride.url}}">{{ride.title}}</a> 
+      <small><i>{{ ride.distance }} km</i></small></h3>
     <p>
-      {% assign excerpt = post.content | split:'<!--more-->' | first %}
-      {{ excerpt | remove: '<p>' | remove: '</p>' }}
-      {% if excerpt != post.content %}
-        <a class="label label-default" href="{{post.url}}">Read more</a>
+      {% assign excerpt = ride.content | split:'<!--more-->' | first %}
+      {{ excerpt | markdownify | remove: '<p>' | remove: '</p>' }}
+      {% if excerpt != ride.content %}
+        <a class="label label-default" href="{{ride.url}}">Read more</a>
       {% endif %}
     </p>
   </li>
