@@ -4,10 +4,10 @@
 <html lang="en">
   <head>
     {% include head.html %}
-    <link rel="stylesheet" href="/cycling/css/openlayers.css" type="text/css">
-    <link rel="stylesheet" href="/cycling/css/style.css" type="text/css">
     <script src="/cycling/js/OpenLayers.js"></script>
     <script src="/cycling/js/mainmap.js"></script>
+    <link rel="stylesheet" href="/cycling/css/openlayers.css" type="text/css">
+    <link rel="stylesheet" href="/cycling/css/style.css" type="text/css">
   </head>
   <body onload="init('map', '{{page.kml}}');">
 
@@ -35,7 +35,7 @@
       </p>
       <!-- elevation profile -->
       <img class="collapse elevation-profile" id="viewelevation"  
-           alt="altitude profile" src="{{page.altimage}}">
+           alt="elevation profile" src="{{page.altimage}}">
       <!-- map -->
       <div id="map" class="mainmap"></div>
       <br>
@@ -61,11 +61,5 @@
         </div>
       </div>
     </div><!-- /.modal -->
-    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/js/bootstrap.min.js"></script>
-
   </body>
 </html>
