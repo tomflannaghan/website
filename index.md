@@ -9,22 +9,15 @@ layout: default
 </div>
 <div class="col-sm-9 col-sm-pull-3" markdown="1">
 
-I am a research assistant working with Professor Stephan Fueglistaler
-at the
-[Atmosphere Ocean Sciences Program](http://www.princeton.edu/aos/) at
-Princeton University. I study [equatorial waves](/research.html)
-and related phenomena near the tropopause and in the stratosphere.
+I am a research assistant working with Professor Stephan Fueglistaler at the [Atmosphere Ocean Sciences Program](http://www.princeton.edu/aos/) at Princeton University. I study [equatorial waves](/research.html) and related phenomena near the tropopause and in the stratosphere.
 
-I do a lot of [programming](/postlist_full.html) both at work and
-for fun in my spare time. Most of the time I code in python but I also
-enjoy working with other languages (in particular,
-[functional languages](http://en.wikipedia.org/wiki/Functional_programming).)
+I do a lot of [programming](/postlist_full.html) both at work and for fun in my spare time. Most of the time I code in python but I also enjoy working with other languages.  **I'm currently looking for python development opportunities in the UK.**
 
-I also love [cycling](/cycling), and at the moment ride with the
-[Princeton Freewheelers](http://princetonfreewheelers.com/).
+I also love [cycling](/cycling) and have compiled some of my [favourite rides](/cycling).
 
 <a href="mailto:tomflannaghan@gmail.com" class="btn btn-default btn-sm">
-<span class="glyphicon glyphicon-envelope"></span> tomflannaghan@gmail.com
+ <span class="glyphicon glyphicon-envelope"></span>
+ tomflannaghan@gmail.com
 </a>
 
 
