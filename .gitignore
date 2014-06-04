@@ -1,4 +1,6 @@
 _site
+cycling/alt/*svg
+cycling/kml/*kml
 
 ########## bootstrap git ignore ##########
 
