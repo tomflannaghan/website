@@ -21,9 +21,10 @@ into thinking it is seeing a normal `python` interpretter. We can do
 this by using the `ipython --classic` flag. The following `.emacs`
 snippet does this:
 
-    --- language: cl ---
-	(setq py-python-command "ipython")
-    (setq py-python-command-args '("-i" "--classic" "--pylab"))
+{% highlight cl %}
+(setq py-python-command "ipython")
+(setq py-python-command-args '("-i" "--classic" "--pylab"))
+{% endhighlight %}
 
 We then get a working `ipython` prompt with `pylab` support but do not
 get autocomplete or any of the other keyboard shortcuts. Executing
@@ -47,10 +48,12 @@ around online that may or may not work.
 
 The `.emacs` snippet required is then
 
-    --- language: cl ---
-    (require 'python-mode)
-    (require 'ipython)
-    (setq-default py-python-command-args '("--pylab" "--colors" "LightBG"))
+{% highlight cl %}
+(require 'python-mode)
+(require 'ipython)
+(setq-default py-python-command-args '("--pylab" "--colors" "LightBG"))
+{% endhighlight %}
+
 
 `ipython.el` does a great job of supporting lots of `ipython`
 features, so this setup works very nicely.
@@ -65,8 +68,9 @@ adding
 of `python.el` to your load path.  `ipython` can then be activated
 simply by using this code in your `.emacs`:
 
-    --- language: cl ---
-    (require 'python)
-    (setq python-shell-interpreter "ipython")
-    (setq python-shell-interpreter-args "--pylab")
+{% highlight cl %}
+(require 'python)
+(setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter-args "--pylab")
+{% endhighlight %}
 
