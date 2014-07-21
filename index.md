@@ -3,24 +3,12 @@ title: About me
 layout: default
 ---
 
-<div class="row">
-<div class="col-sm-3 col-sm-push-9">
-<img src="/assets/me.jpg" alt="Me!" class="img-thumbnail" /> <br/>
-</div>
-<div class="col-sm-9 col-sm-pull-3" markdown="1">
+I am a research assistant working with Professor Stephan Fueglistaler at the [Atmosphere Ocean Sciences Program](http://www.princeton.edu/aos/) at Princeton University studying [equatorial waves](/research.html) and related phenomena near the tropopause and in the stratosphere. I also do a lot of [programming](/postlist_full.html) both at work and for fun in my spare time. A few things that I have done are available on the [projects](/projects.html) page.
 
-I am a research assistant working with Professor Stephan Fueglistaler at the [Atmosphere Ocean Sciences Program](http://www.princeton.edu/aos/) at Princeton University. I study [equatorial waves](/research.html) and related phenomena near the tropopause and in the stratosphere.
-
-I do a lot of [programming](/postlist_full.html) both at work and for fun in my spare time. Most of the time I code in python but I also enjoy working with other languages.  **I'm currently looking for python development opportunities in the UK.**
-
-I also love [cycling](/cycling) and have compiled some of my [favourite rides](/cycling).
+I also love [cycling](/cycling) and have compiled some of my [favourite rides](/cycling) here.
 
 <a href="mailto:tomflannaghan@gmail.com" class="btn btn-default btn-sm">
  <span class="glyphicon glyphicon-envelope"></span>
  tomflannaghan@gmail.com
 </a>
-
-
-</div>
-</div>
 
