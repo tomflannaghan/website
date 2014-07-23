@@ -8,3 +8,7 @@ sitemap:
   include_posts:
     - /cycling/index.html
     - /postlist_full.html
+
+markdown: redcarpet
+redcarpet:
+  extensions: ['smart']
