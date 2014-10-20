@@ -35,7 +35,6 @@ def convert_image(content, out, padding=0):
     \usepackage{overpic}
     \usepackage{color}
     \usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
-    \graphicspath{{images/}}
     \begin{document}
     \pagestyle{empty}
     \begin{figure}
@@ -67,7 +66,7 @@ class Replacer:
 
     def replacement(self, mo):
         self.count += 1
-        content = mo.group(1)
+        content = mo.group(2)
         filename = 'publication-ready/figure%0.2d.pdf' % self.count
         print filename
         convert_image(content, filename, padding=4)
@@ -77,7 +76,7 @@ class Replacer:
 
 data = open('mixing.tex', 'r').read()
 rep = Replacer()
-newdata = re.sub(r"\\begin{figure}(.*?)\\caption",
+newdata = re.sub(r"\\begin{figure}(\[.*?\])?(.*?)\\caption",
                  rep.replacement, data, 
                  flags=re.MULTILINE|re.DOTALL)
 open('mixing-pub.tex', 'r').write()
