@@ -1,5 +1,13 @@
 # my publications. used by pub.html.
 
+- authors: <b>Flannaghan, T. J.</b>, S. Fueglistaler, I. M. Held, S. Po-Chedley, B. Wyman, and M. Zhao
+  year: 2014
+  title: Tropical temperature trends in Atmospheric General Circulation Model simulations and the impact of uncertainties in observed SSTs
+  url: http://onlinelibrary.wiley.com/doi/10.1002/2014JD022365/full
+  journal: J. Geophys. Res. Atoms.
+  rest: 119, doi:10.1002/2014JD022365
+  pdf: /assets/flannaghan14_SST.pdf
+
 - authors: <b>Flannaghan, T. J.</b> and S. Fueglistaler
   title: Vertical mixing and the temperature and wind structure of the tropical tropopause layer
   year: 2014
