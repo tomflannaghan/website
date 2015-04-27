@@ -18,7 +18,7 @@ def process_comment(comment):
     comment_unicode = unicode(comment['comment'])
     comment_html = bleach.clean(markdown.markdown(comment_unicode),
                                 allowed_tags, strip=True)
-    return {'name': str(comment['name']),
+    return {'name': comment['name'].encode('ascii', 'xmlcharrefreplace'),
             'comment': comment_html.encode('ascii', 'xmlcharrefreplace'),
             'path': str(comment['path'])}
 
