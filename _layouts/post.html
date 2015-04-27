@@ -4,3 +4,51 @@ layout: default
 
 <p><i>Posted on {{page.date | date: "%-d %B %Y"}}</i></p>
 {{ content }}
+
+{% assign hascomments = false %}
+{% for comment in site.data.comments %}
+  {% if comment.path == page.path %}
+    {% assign hascomments = true %}
+  {% endif %}
+{% endfor %}
+
+{% if hascomments %}
+<hr/>
+<h3>Comments</h3>
+<p>Please add your comments <a href="#leave-a-comment">using this form</a>.</p>
+{% for comment in site.data.comments %}
+  {% if comment.path == page.path %}
+  <blockquote>
+    <h4><b>{{comment.name}}:</b></h4>
+    {{comment.comment}}
+  </blockquote>
+  {% endif %}
+{% endfor %}
+{% endif %}
+
+<hr/>
+<h3>Leave a comment</h3><a name="leave-a-comment"></a>
+<form action="http://pooleapp.com/stash/94ac1e1c-fc5c-4042-84e5-4ac612aa9ca7/" method="post" role="form">
+  <input type="hidden" name="redirect_to" value="/thanks.html" />
+  <input type="hidden" name="path" value="{{ page.path }}" />
+
+  <div class="form-group">
+    <label>Your name</label>
+    <input type="text" name="name" class="form-control" required/>
+  </div>
+
+  <div class="form-group">
+    <label>Your email <span>(optional, and never published)</span></label>
+    <input type="text" name="email" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label>Your Comments</label>
+    <textarea name="comment" class="form-control" rows="5" required></textarea>
+    <p class="help-block">You can use Markdown for markup. HTML won't work.</p>
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
+
+</form>
+<p></p>

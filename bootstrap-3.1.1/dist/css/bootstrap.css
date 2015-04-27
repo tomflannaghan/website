@@ -1,6 +1,6 @@
 /*!
  * Bootstrap v3.1.1 (http://getbootstrap.com)
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
@@ -632,7 +632,7 @@ abbr[data-original-title] {
 blockquote {
   padding: 11px 22px;
   margin: 0 0 22px;
-  font-size: 20px;
+  font-size: 16px;
   border-left: 5px solid #eee;
 }
 blockquote p:last-child,
