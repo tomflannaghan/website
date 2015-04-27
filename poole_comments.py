@@ -15,10 +15,11 @@ def process_comment(comment):
 
     '''
     allowed_tags = bleach.ALLOWED_TAGS + ['p']
-    comment_html = bleach.clean(markdown.markdown(comment['comment']),
+    comment_unicode = unicode(comment['comment'])
+    comment_html = bleach.clean(markdown.markdown(comment_unicode),
                                 allowed_tags, strip=True)
     return {'name': str(comment['name']),
-            'comment': str(comment_html),
+            'comment': comment_html.encode('ascii', 'xmlcharrefreplace'),
             'path': str(comment['path'])}
 
 
@@ -35,7 +36,7 @@ def main():
         try:
             processed_comments.append(process_comment(comment))
         except Exception as exception:
-            print("Exception {} raised processing comment {}"
+            print("Exception {!r} raised processing comment {}"
                   .format(exception, comment))
 
     # save to yaml
