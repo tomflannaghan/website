@@ -3,4 +3,4 @@
 # python poole_comments.py
 jekyll clean
 jekyll build
-rsync -rv _site/* flannaghan:public_html/.
+rsync -rv _site/* lightsail:stack/nginx/flannaghan.com/.
