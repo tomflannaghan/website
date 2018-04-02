@@ -2,8 +2,8 @@ highlighter: pygments
 encoding: utf-8
 exclude: [bootstrap-3.1.1, excluded, publish.sh, tmp]
 
-url: http://www.flannaghan.com
-baseurl: /
+url: "https://www.flannaghan.com"
+baseurl: ""
 
 sitemap:
   include_posts:
