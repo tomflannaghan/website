@@ -1,5 +1,8 @@
-- name: princeton 
-  title: Near Princeton, NJ
+- name: cambridge
+  title: Short Rides around Cambridge
 
-- name: uk 
+- name: uk
   title: Long Rides in the UK
+
+- name: princeton
+  title: Near Princeton, NJ

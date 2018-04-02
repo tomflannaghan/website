@@ -24,10 +24,10 @@ according to location:</p>
   {% for ride in site.pages %}
   {% if ride.location == loc.name and ride.bikeroute %}
   <li>
-    <h3><a href="{{ride.url}}">{{ride.title}}</a> 
+    <h3><a href="{{ride.url}}">{{ride.title}}</a>
       <small><i>{{ ride.distance }} km</i></small></h3>
     <p>
-      {% assign excerpt = ride.content | split:'<!--more-->' | first %}
+      {% assign excerpt = ride.content | split:'SNIPPETEND' | first %}
       {{ excerpt | markdownify | remove: '<p>' | remove: '</p>' }}
       {% if excerpt != ride.content %}
         <a class="label label-default" href="{{ride.url}}">Read more</a>

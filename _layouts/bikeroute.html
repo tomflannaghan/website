@@ -12,37 +12,37 @@
   <body onload="init('map', '{{page.kml}}');">
 
     {% include main-menu.html %}
-    
+
     <div class="container">
       <h1>{{page.title}}</h1>
-      
-      {{ content }}
+
+      {{ content | remove: 'SNIPPETEND' }}
 
       <p><b>Stats:</b> {{page.distance}}km total distance.</p>
 
       <p>
         <!-- download links -->
-        Download 
+        Download
         <a href="{{page.gpx}}">GPX</a> or
-        <a  href="{{page.kml}}">KML</a>, or use with 
+        <a  href="{{page.kml}}">KML</a>, or use with
         <a data-toggle="modal" href="#androidModal">Android</a>.
       </p>
       <p>
         <!-- elevation toggle -->
-        <a class="btn btn-sm btn-default" 
+        <a class="btn btn-sm btn-default"
            data-toggle="collapse" data-target="#viewelevation">
           View elevation profile &raquo;</a>
       </p>
       <!-- elevation profile -->
-      <img class="collapse elevation-profile" id="viewelevation"  
+      <img class="collapse elevation-profile" id="viewelevation"
            alt="elevation profile" src="{{page.altimage}}">
       <!-- map -->
       <div id="map" class="mainmap"></div>
       <br>
     </div>
-    
+
     <!-- Android instructions modal -->
-    <div class="modal fade" id="androidModal" tabindex="-1" 
+    <div class="modal fade" id="androidModal" tabindex="-1"
          role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
