@@ -1,0 +1,59 @@
+I"8<p><em>[This is a longish post about the process of developing pyrrtm, a python wrapper for RRTM. Please see the <a href="/pyrrtm.html">project page</a> for more practical details about using it!]</em></p>
+
+<p>The <a href="http://rtweb.aer.com/rrtm_frame.html">RRTM</a> radiation code is used a lot in atmospheric science, and is pretty powerful. Unfortunately, it is stuck with a rather nasty ASCII interface (which I can’t really imagine anyone using!) so when I came to use it to do <a href="http://onlinelibrary.wiley.com/doi/10.1002/2013JD020772/abstract">some work</a>, I wrote a python wrapper. I actually went through various iterations for how this wrapper should work, and initially I considered writing a script that could construct the ASCII input required by RRTM. I quickly ruled this out as it would be pretty tedious, and also introduces a large overhead. We ended up doing ~10,000–100,000 radiative transfer calculations for each result in the paper, so overhead was important for us.</p>
+
+<h3 id="first-attempt">First Attempt</h3>
+
+<p>After ruling out using the ASCII interface, the first thing I tried was using the excellent <a href="http://cens.ioc.ee/projects/f2py2e/">f2py</a> to compile the FORTRAN sources for RRTM into a python module. This proved successful and surprisingly easy (once I’d worked out which RRTM variables needed setting!), as well as having no overhead at all — numpy arrays are fed straight into the RRTM code. This was the method I used to produce the results for <a href="http://onlinelibrary.wiley.com/doi/10.1002/2013JD020772/abstract">the paper</a>. After completing that project, I intended to release the code, but I hit an obstacle. For some reason, I had difficulties compiling the code, with segfaults on new versions of gfortran, and unpredictable behaviour (i.e. sometimes I got the wrong answer with no error). I put this down to the extremely old-school nature of the RRTM library and sensitivity to compiler options. With f2py, it was too difficult to have control over those things. Sadly, this unpredictable behaviour meant that releasing the code was a bit of a waste of time. :-(</p>
+
+<h3 id="second-time-lucky">Second time lucky!</h3>
+
+<p>After some time doing other projects, I eventually got around to attempting a solution to these issues. First, I added a little NetCDF wrapper (written in C) to the RRTM code. I simplified matters by only exposing the parts of RRTM we needed for our project (and similar projects). As the wrapper is compiled into an application with RRTM, I had something that always worked as a standalone application, and with relatively straightforward compiler flags (as it did not need to be a shared object and link with python). I also fixed a couple of bugs caused by odd gfortran behaviour hitting up against some rather dodgy FORTRAN (issues with <code class="language-plaintext highlighter-rouge">DOUBLE PRECISION</code> declarations clashing with <code class="language-plaintext highlighter-rouge">-fdefault-real-8</code> flag — really difficult to fix!). Next, I redid the python module interface using <a href="http://www.cython.org">cython</a> in place of f2py to give better control over compilation. This was very simple, and on reflection I now think that cython is better than f2py for exposing small sets of FORTRAN functions to python.</p>
+
+<p>I now have two ways to interface with RRTM (the cython module and NetCDF), both of which are better than the original ASCII interface. I still occasionally have issues getting the cython module approach to work, but the NetCDF approach seems rock solid! If speed is critical, the cython module wins (no overhead – <strong>up to 10 times speed up</strong> on my machine), but for other purposes the NetCDF method is the best. Both methods are functionally identical, and just vary in performance really.</p>
+
+<h3 id="pyrrtm--the-finished-wrapper">pyrrtm – the finished wrapper</h3>
+
+<p><em>This section is now out of date! The cython wrapper now <a href="/2014/08/27/pyrrtm-exceptions.html">raises exceptions</a>  :-)</em></p>
+
+<p>After battling to produce not one but two python interfaces, the easy part was writing a bit of python to call the methods! The python package, <a href="/pyrrtm.html">pyrrtm</a>, can toggle between the two methods, letting the user choose. Here are the pros and cons of each method once wrapped by <a href="/pyrrtm.html">pyrrtm</a> (at time of writing!):</p>
+
+<center>
+<table class="table table-bordered table-condensed" style="max-width:700px;">
+  <thead><tr><th> </th><th>Pros</th> <th>Cons</th></tr></thead>
+  <tbody>
+    <tr><th>NetCDF</th>
+        <td>
+            <ul>
+                <li>Fewer dependencies</li>
+                <li>A standalone executable</li>
+                <li>Can be used from outside of python</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li>Big I/O overhead</li>
+            </ul>
+        </td>
+    </tr>
+    <tr><th>cython</th>
+        <td>
+            <ul>
+                <li>No overhead -- really fast!</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li>Kills python instead of raising exceptions :-(</li>
+                <li>More dependencies</li>
+            </ul>
+        </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+
+<p>As you can see, the cython interface has the unfortunate disadvantage of killing python when it fails rather than gracefully raising an exception. This means that the <strong>NetCDF interface is always default</strong> in pyrrtm, but the cython interface can easily be <a href="http://pyrrtm.flannaghan.com/native.html">switched on whenever needed</a> (e.g. you can test using the NetCDF interface, but use cython for a big job).</p>
+
+<p>Overall I’m pretty happy with how it turned out, and please <a href="mailto:tomflannaghan@gmail.com">contact me</a> if you plan on using it or want to contribute to it!</p>
+:ET

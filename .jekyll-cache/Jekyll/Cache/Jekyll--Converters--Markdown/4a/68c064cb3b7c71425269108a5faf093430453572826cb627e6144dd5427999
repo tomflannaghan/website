@@ -1,0 +1,8 @@
+I"W<p><em>Oct 2017: I’ve removed comments! They stopped working because pooleapp is no more.</em></p>
+
+<p>I’ve just added comments to my posts, so feel free to leave a comment! I used <a href="http://pooleapp.com">Poole</a> to handle the storage and retrieval of comments, which was pretty elegant to set up.</p>
+
+<p>Submitting the comment to Poole is really simple: you get a URL to which you can make post requests, and anything that is posted is stored. Retrieving the comments is also simple, and is through another URL. Potentially, one could dynamically load comments using javascript in the browser, but I decided to statically compile the comments into the site, as this gives a simpler implementation, and means I get to moderate the comments before they are public. The flip-side to this is that comments won’t appear until I rebuild the site, so comments won’t appear immediately (Poole sends an email notification when a comment is submitted, so I will know when I need to rebuild the site).</p>
+
+<p>I would definitely recommend Poole to anyone thinking of doing comments on a static site.</p>
+:ET

@@ -1,0 +1,9 @@
+I"è<p>I like having custom keyboard shortcuts to launch applications (mainly
+terminals, emacs, and Google Chrome.) For <code class="language-plaintext highlighter-rouge">emacsclient</code> and the
+<code class="language-plaintext highlighter-rouge">gnome-terminal</code>, it makes sense to open a new window each time the
+keyboard shortcut is keyed. However, I find it annoying when a new
+Chrome window opens each time I key the shortcut. Often, I really
+would rather switch to the existing Chrome window and open a new
+tab. With multiple desktops (especially in Gnome 3) I find that I end
+up with Chrome windows on all of my desktops ‚Äì quite annoying!</p>
+:ET

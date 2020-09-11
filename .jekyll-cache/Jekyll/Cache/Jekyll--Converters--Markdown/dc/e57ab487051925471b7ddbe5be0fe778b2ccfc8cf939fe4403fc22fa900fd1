@@ -1,0 +1,12 @@
+I")<p><a href="https://github.com/tomflannaghan/pyrrtm">pyrrtm</a> is a python wrapper to the <a href="http://rtweb.aer.com/rrtm_frame.html">RRTM</a> radiation code.</p>
+
+<p><a href="http://rtweb.aer.com/rrtm_frame.html">RRTM</a> is widely used in atmospheric science, but the code has a rather nasty ascii interface that is a big obstacle to using the code in scripts, and also inhibits performance if lots of radiative transfer calculations need doing. pyrrtm addresses these issues.</p>
+
+<ul>
+  <li>The project has a <a href="https://github.com/tomflannaghan/pyrrtm">github repository</a> where you can download the package.</li>
+  <li>Documentation is available <a href="http://pyrrtm.flannaghan.com">here</a>.</li>
+  <li>Please <a href="mailto:tomflannaghan@gmail.com">contact me</a> if you wish to contribute or have any questions.</li>
+</ul>
+
+<p>pyrrtm also includes a NetCDF-based <a href="https://github.com/tomflannaghan/pyrrtm/blob/master/cli_doc.org">command-line interface</a> that can be used from outside python (it does not require python at all).</p>
+:ET

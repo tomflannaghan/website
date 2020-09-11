@@ -1,4 +1,4 @@
-highlighter: pygments
+highlighter: rouge
 encoding: utf-8
 exclude: [bootstrap-3.1.1, excluded, publish.sh, tmp]
 
@@ -9,7 +9,3 @@ sitemap:
   include_posts:
     - /cycling/index.html
     - /postlist_full.html
-
-markdown: redcarpet
-redcarpet:
-  extensions: ['smart']

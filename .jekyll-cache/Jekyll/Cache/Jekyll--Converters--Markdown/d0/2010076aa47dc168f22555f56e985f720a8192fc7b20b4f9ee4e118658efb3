@@ -1,0 +1,8 @@
+I"!<p>Some commands are not highlighted well in AUCTEX; these commands are
+commands which AUCTEX does not know about. To do highlighting
+correctly, AUCTEX needs to know the number and type of arguments
+(e.g. <code class="language-plaintext highlighter-rouge">[...]</code> or <code class="language-plaintext highlighter-rouge">{...}</code>) that a given command takes before it can
+highlight the arguments correctly. There is a relatively simple way to
+add your own commands with specified arguments, and this chunk of
+.emacs code does the job:</p>
+:ET

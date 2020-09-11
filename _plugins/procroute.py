@@ -12,7 +12,7 @@ import scipy.interpolate
 
 input_data = json.load(sys.stdin)
 for route_data in input_data:
-    print "Generating " + route_data['alt_file']
+    print("Generating " + route_data['alt_file'])
     dist, ele = numpy.array(route_data['profile_data']).T
     ######## elevation figure
     pylab.figure(1, figsize=(10,2))

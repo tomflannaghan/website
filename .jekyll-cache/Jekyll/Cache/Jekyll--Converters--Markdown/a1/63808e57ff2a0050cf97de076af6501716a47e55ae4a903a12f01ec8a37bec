@@ -1,0 +1,5 @@
+I"¬<p>I use <code class="language-plaintext highlighter-rouge">ipython</code> and <code class="language-plaintext highlighter-rouge">emacs</code> to do almost all of my data analysis work,
+and I use them across many different machines and systems. Getting
+<code class="language-plaintext highlighter-rouge">ipython</code> to work nicely in emacs across multiple versions is a bit
+challenging, especially in the older versions.</p>
+:ET
