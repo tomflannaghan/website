@@ -1,7 +1,0 @@
-I"ä<p><a href="http://www.gnu.org/software/auctex/manual/auctex/Folding.html">TeX-fold-mode</a>
-is a minor mode which is part of
-<a href="http://www.gnu.org/software/auctex/">AUCTEX</a>, and automatically hides
-a lot of the latex formatting commands. For example, <code class="language-plaintext highlighter-rouge">\alpha</code> is
-rendered using an alpha character, and references are shortened to
-<code class="language-plaintext highlighter-rouge">[r]</code>. Hereâ€™s an example:</p>
-:ET

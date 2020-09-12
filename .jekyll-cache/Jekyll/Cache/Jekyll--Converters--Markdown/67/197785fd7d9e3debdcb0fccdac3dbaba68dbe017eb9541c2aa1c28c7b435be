@@ -1,9 +1,0 @@
-I"+<p>Synctex is a feature available in the more recent LaTeX distributions
-that embeds links to locations in the source code (e.g. file name and
-line number) at the corresponding locations in a pdf file. When viewed
-with a compatible viewer and editor, we can automatically scroll the
-viewer to the point in the pdf corresponding to the location of the
-cursor in the editor, and vice versa.  Very handy if you are editing a
-long document (e.g. a thesis or paper)! In theory, emacs and Okular is
-an example of a compatible editor and viewer combination.</p>
-:ET

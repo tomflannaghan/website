@@ -1,8 +1,0 @@
-I"ô<p>A while ago I switched to XeLatex from Latex as it can do some amazing
-things. One particularly cool thing is word counting from within the
-document itself. This is great for paper abstracts! I got the code
-from
-<a href="http://robert.orzanna.de/2012/06/xelatex-word-count-inside-document.html">here</a>
-(or possibly somewhere else with similar code â€“ it was a while ago!)
-and tweaked it a bit to produce my <code class="language-plaintext highlighter-rouge">wordcounter</code> environment:</p>
-:ET

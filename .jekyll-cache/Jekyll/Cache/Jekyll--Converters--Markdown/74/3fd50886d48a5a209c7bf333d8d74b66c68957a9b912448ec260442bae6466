@@ -1,2 +1,0 @@
-I"«<p>When writing <a href="/pyrrtm">pyrrtm</a>, I wrapped a large FORTRAN code using a cython interface. The original FORTRAN code was written as a standalone program, taking ASCII input files and producing ASCII output files, and so errors in the FORTRAN code were simply coded to print an error message and terminate the program. For example, using the following code to detect an error is common throughout the code base:</p>
-:ET
