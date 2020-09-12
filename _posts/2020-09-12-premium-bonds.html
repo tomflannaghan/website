@@ -20,9 +20,6 @@ layout: post
         <label for="monthsTextBox">Number of Months</label>
         <input type="text" class="form-control" id="monthsTextBox" value="12" />
     </div>
-    <div class="checkbox">
-        <label><input type="checkbox" id="showBoth" /> Show approximation and exact calculation</label>
-    </div>
     <button type="button" id="calculateButton" class="btn btn-default" onclick="calculate()">Calculate</button>
 </form>
 
@@ -61,17 +58,20 @@ layout: post
 <p>
     If the number of bond draws (number of bonds * months) is greater than 
     <math>25 * (1 - p) / p</math>, where <math>p</math> is the probability of a prize,
-    we use the normal approximation to the binomial distribution to get the number of prizes. Below
-    this threshold, we use the binomial distribution to compute the number of prizes. 
-    It then draws each prize according to the distribution of prizes. 
-    You can optionally show both in the plot (the binomial distribution method is unstable at very large values).
+    we use the normal approximation to the binomial distribution to get the number of prizes, rather than
+    using the binomial distribution directly.
+    For these large numbers of bond draws the approximation is extremely good, and performs better than the exact calculation.
 </p>
-
+<p>
+    Once the number of prizes is determined, it then draws each prize according to the distribution of prizes (with replacement).
+</p>
 
 <script src="/css/plotly-latest.min.js"></script>
 <script>
     // Useful for debugging. Does a very simple explicit simulation.
     var showBruteForce = false;
+    var showApproxAlways = false;
+    var showExactAlways = false;
 
     var prizes = [
         [1000000, 2],
@@ -266,13 +266,12 @@ layout: post
         var quantity = n * m;
         if (isNaN(quantity)) return;
         
-        var showBoth = document.getElementById("showBoth").checked;
         // See wikipedia page for binomial distribution. Relates to the probability
         // of drawing from the normal distribution outside the valid [0, n] range.
         var approximationValid = quantity > 25 * (1 / oddsOfPrize);
         var data = [];
 
-        if (showBoth || approximationValid) {
+        if (showApproxAlways || approximationValid) {
             var plotData = getPlotData(
                 drawReturnForQuantityApproximation, 
                 quantity,
@@ -287,7 +286,7 @@ layout: post
             data.push(trace);
         }
 
-        if (showBoth || !approximationValid) {
+        if (showExactAlways || !approximationValid) {
             var plotData = getPlotData(
                 drawReturnForQuantity, 
                 quantity,
@@ -350,10 +349,10 @@ layout: post
     }
 
     // Set up validators.
-    document.getElementById("quantityTextBox").onchange = function() {
+    document.getElementById("quantityTextBox").oninput = function() {
         validateInt("quantityTextBox");
     }
-    document.getElementById("monthsTextBox").onchange = function() {
+    document.getElementById("monthsTextBox").oninput = function() {
         validateInt("monthsTextBox");
     }
     
