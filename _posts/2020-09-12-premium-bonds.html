@@ -316,10 +316,8 @@ layout: post
             data.push(trace);
         }
 
-        var mean = quantity * oddsOfPrize;
-        var std = Math.sqrt(quantity * oddsOfPrize * (1 - oddsOfPrize));
         var xMax = Math.max(
-            mean + 5 * std,
+            50 * quantity * oddsOfPrize,  // Roughly 2 * mean prize.
             250,
         );
         var layout = {
