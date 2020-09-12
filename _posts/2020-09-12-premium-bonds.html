@@ -23,7 +23,7 @@ layout: post
     <div class="checkbox">
         <label><input type="checkbox" id="showBoth" /> Show approximation and exact calculation</label>
     </div>
-    <button type="button" class="btn btn-default" onclick="calculate()">Calculate</button>
+    <button type="button" id="calculateButton" class="btn btn-default" onclick="calculate()">Calculate</button>
 </form>
 
 
@@ -316,8 +316,10 @@ layout: post
             data.push(trace);
         }
 
+        var mean = quantity * oddsOfPrize;
+        var std = Math.sqrt(quantity * oddsOfPrize * (1 - oddsOfPrize));
         var xMax = Math.max(
-            quantity * oddsOfPrize * 50,  // 2 times the mean.
+            mean + 5 * std,
             250,
         );
         var layout = {
@@ -337,6 +339,26 @@ layout: post
         Plotly.newPlot('myDiv', data, layout);
     }
 
+    function validateInt(id) {
+        var button = document.getElementById("calculateButton");
+        var element = document.getElementById(id);
+        var value = element.value;
+        if (isNaN(value) || Math.round(value) != value) {
+            element.parentElement.classList.add("has-error");
+        }
+        else {
+            element.parentElement.classList.remove("has-error");
+        }
+    }
+
+    // Set up validators.
+    document.getElementById("quantityTextBox").onchange = function() {
+        validateInt("quantityTextBox");
+    }
+    document.getElementById("monthsTextBox").onchange = function() {
+        validateInt("monthsTextBox");
+    }
+    
     // Do an initial calculation.
     calculate();
 </script>
