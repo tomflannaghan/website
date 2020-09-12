@@ -1,0 +1,342 @@
+---
+title: Premium Bond Calculator
+layout: post
+---
+
+<p>
+    I've got some premium bonds, and wanted a better idea of the distribution of returns
+    than the <a href=https://www.moneysavingexpert.com/savings/premium-bonds-calculator/>MSE Calculator</a>
+    provides. Unlike the MSE Calculator, I am quite likely not to update this as often as the rates change.
+    It's based on the Premium Bond prizes for September 2020 currently. See <a href="#details">below</a> for 
+    the details of the calculation.
+</p>
+
+<form>
+    <div class="form-group">
+        <label for="quantityTextBox">Number of Bonds</label>
+        <input type="text" class="form-control" id="quantityTextBox" value="10000" />
+    </div>
+    <div class="form-group">
+        <label for="monthsTextBox">Number of Months</label>
+        <input type="text" class="form-control" id="monthsTextBox" value="12" />
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" id="showBoth" /> Show approximation and exact calculation</label>
+    </div>
+    <button type="button" class="btn btn-default" onclick="calculate()">Calculate</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Prize Money</th>
+            <th>Interest rate</th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Median</td>
+        <td id="50p"></td>
+        <td id="50pIR"></td>
+    </tr>
+    <tr>
+        <td>25th percentile</td>
+        <td id="25p"></td>
+        <td id="25pIR"></td>
+    </tr>
+    <tr>
+        <td>75th percentile</td>
+        <td id="75p"></td>
+        <td id="75pIR"></td>
+    </tr>
+</table>
+<div id="myDiv" style="height:500px" />
+
+<h3><a name="details"></a>The details</h3>
+<p>
+    The calculator shows a cumulative probability of each prize by sampling from the distribution of total prize money
+    from our bonds over all of the months. It takes 20000 samples to form the distribution.
+</p>
+<p>
+    If the number of bond draws (number of bonds * months) is greater than 
+    <math>25 * (1 - p) / p</math>, where <math>p</math> is the probability of a prize,
+    we use the normal approximation to the binomial distribution to get the number of prizes. Below
+    this threshold, we use the binomial distribution to compute the number of prizes. 
+    It then draws each prize according to the distribution of prizes. 
+    You can optionally show both in the plot (the binomial distribution method is unstable at very large values).
+</p>
+
+
+<script src="/css/plotly-latest.min.js"></script>
+<script>
+    // Useful for debugging. Does a very simple explicit simulation.
+    var showBruteForce = false;
+
+    var prizes = [
+        [1000000, 2],
+        [100000, 7],
+        [50000, 14],
+        [25000, 27],
+        [10000, 69],
+        [5000, 139],
+        [1000, 2184],
+        [500, 6552],
+        [100, 29969],
+        [50, 29969],
+        [25, 3752125]
+    ].reverse();
+    var oddsOfPrize = 1.0 / 24500;
+    
+    var totalNumberOfPrizes = 0.0;
+    prizes.forEach(function(value) {
+        totalNumberOfPrizes += value[1];
+    });
+    
+    var prizeLookUp = [];
+    var currentOdds = 0.0;
+    prizes.forEach(function (value) {
+        currentOdds += value[1] / totalNumberOfPrizes;
+        prizeLookUp.push([currentOdds, value[0]]);
+    });
+
+    function drawGivenAWin() {
+        var draw = Math.random();
+        for (var i = 0; i < prizeLookUp.length; i++) {
+            if (draw < prizeLookUp[i][0]) {
+                return prizeLookUp[i][1];
+            }
+        }
+    }
+
+    function drawPrize() {
+        // First, have we won a prize?
+        if (Math.random() > oddsOfPrize) return 0.0;
+        // If so, which did we win?
+        return drawGivenAWin()
+    }
+
+    function drawReturnForQuantityBruteForce(quantity, trials) {
+        // A brute force simulation of the problem for debugging.
+        var returns = [];
+        for (j = 0; j < trials; j++) {
+            var result = 0.0;
+            for (var i = 0; i < quantity; i++) {
+                result = result + drawPrize();
+            }
+            returns.push(result);
+        }
+        return returns;
+    }
+
+    // Returns an array of length maxK of all values of n choose k.
+    function choose(n, maxK) {
+        var current = [1];
+        for (var i = 0; i < n; i++) {
+            var previousValue = current[0];
+            for (var j = 1; j < current.length; j++) {
+                var temp = current[j];
+                current[j] += previousValue;
+                previousValue = temp;
+            }
+            if (current.length <= maxK) {
+                current.push(1);
+            }
+        }
+        return current;
+    }
+
+    function drawReturnForQuantity(quantity, trials) {
+        // Step 1. We construct the binomial CDF for n = quantity and p = oddsOfPrize.
+        // We will then draw from this to get the number of prizes.
+        var binomialCdf = [];
+        // Computing n choose k is best done all at once. This picks a
+        // maximum k value required that satisfies the level of accuracy below.
+        // Select 10 standard deviations above the mean.
+        var mean = quantity * oddsOfPrize;
+        var std = Math.sqrt(quantity * oddsOfPrize * (1 - oddsOfPrize));
+        var maxK = Math.max(Math.round(mean + 10 * std), 20);
+        maxK = Math.min(maxK, quantity);
+        console.log("maxK = " + maxK);
+        var nChoose = choose(quantity, maxK);
+        var current = 0.0;
+        var powPI = 1.0;
+        var pow1MinusPNMinusI = Math.pow(1 - oddsOfPrize, quantity);
+        for (var i = 0; i <= maxK; i++) {
+            current += nChoose[i] * powPI * pow1MinusPNMinusI;
+            binomialCdf.push(current);
+            // Stop calculating if we are deep in the tail. If this changes,
+            // the maxK calculation above will also require adjustment.
+            if (current > 0.9999) {
+                console.log("Used " + i + " out of " + maxK + " terms");
+                break;
+            }
+            powPI *= oddsOfPrize;
+            pow1MinusPNMinusI /= (1 - oddsOfPrize);
+        }
+        binomialCdf.push(1.0);
+
+        // Step 2. For each trial, compute the total prize money.
+        returns = [];
+        for (var j = 0; j < trials; j++) {
+            var draw = Math.random();
+            // First draw from the binomial distribution above.
+            var numberOfPrizes = 0;
+            for (var i = 0; i < binomialCdf.length; i++) {
+                if (binomialCdf[i] >= draw) {
+                    numberOfPrizes = i;
+                    break;
+                }
+            }
+            // Now draw this many prizes and add them up.
+            var result = 0.0;
+            for (var i = 0; i < numberOfPrizes; i++) {
+                result = result + drawGivenAWin();
+            }
+            returns.push(result);
+        }
+        return returns;
+    }
+
+    // Standard Normal variate using Box-Muller transform.
+    // https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve/36481059#36481059
+    function randomNormal() {
+        var u = 1 - Math.random(); // (0, 1]
+        var v = 1 - Math.random(); // (0, 1]
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    function drawReturnForQuantityApproximation(quantity, trials) {
+        // This is just like drawReturnForQuantity but instead of computing the
+        // binomial CDF, it uses the normal approximation to it.
+        var mean = oddsOfPrize * quantity;
+        var std = Math.sqrt(quantity * oddsOfPrize * (1 - oddsOfPrize));
+        var returns = [];
+        for (j = 0; j < trials; j++) {
+            var numberOfPrizes = (randomNormal() * std) + mean;
+            var result = 0.0;
+            for (var i = 0; i < Math.round(numberOfPrizes); i++) {
+                result = result + drawGivenAWin();
+            }
+            returns.push(result);
+        }
+        return returns;
+    }
+
+    function getPlotData(drawFunction, quantity, trials) {
+        var draws = drawFunction(quantity, trials);
+        var sortedDraws = draws.sort((a, b) => a - b)
+        var returns = [0];
+        var count = [0];
+        for (var i = 0; i < sortedDraws.length; i++) {
+            var currentReturn = sortedDraws[i];
+            if (currentReturn == returns[returns.length - 1]) {
+                count[count.length - 1] += 1.0 / trials;
+            }
+            else {
+                returns.push(currentReturn);
+                count.push(count[count.length - 1] + 1.0 / trials);
+            }
+        }
+        count.push(1);
+        returns.push(1000000);
+        return {x: returns, y: count}
+    }
+
+    function fillTable(plotData, numberOfBonds, months) {
+        function percentile(p) {
+            for (var i = 0; i < plotData.x.length; i++) {
+                if (plotData.y[i] >= p) return plotData.x[i];
+            }
+        }
+        function fillRow(p) {
+            var perc = percentile(p / 100.0)
+            var rate = perc * 12 / months / numberOfBonds * 100;
+            document.getElementById(p + "p").textContent = "£" + Math.round(perc);
+            document.getElementById(p + "pIR").textContent = rate.toFixed(2) + " %";        
+        }
+        fillRow(25);
+        fillRow(50);
+        fillRow(75);
+    }
+
+    function calculate() {
+        var n = parseInt(document.getElementById("quantityTextBox").value);
+        var m = parseInt(document.getElementById("monthsTextBox").value);
+        var quantity = n * m;
+        if (isNaN(quantity)) return;
+        
+        var showBoth = document.getElementById("showBoth").checked;
+        // See wikipedia page for binomial distribution. Relates to the probability
+        // of drawing from the normal distribution outside the valid [0, n] range.
+        var approximationValid = quantity > 25 * (1 / oddsOfPrize);
+        var data = [];
+
+        if (showBoth || approximationValid) {
+            var plotData = getPlotData(
+                drawReturnForQuantityApproximation, 
+                quantity,
+                20000);
+            var trace = {
+                x: plotData.x,
+                y: plotData.y,
+                mode: 'lines+markers',
+                name: 'Approximation',
+            };
+            fillTable(plotData, n, m);
+            data.push(trace);
+        }
+
+        if (showBoth || !approximationValid) {
+            var plotData = getPlotData(
+                drawReturnForQuantity, 
+                quantity,
+                20000);
+            var trace = {
+                x: plotData.x,
+                y: plotData.y,
+                mode: 'lines+markers',
+                name: 'Exact',
+            };  
+            fillTable(plotData, n, m);
+            data.push(trace);
+        }
+
+        if (showBruteForce) {
+            var plotData = getPlotData(
+                drawReturnForQuantityBruteForce, 
+                quantity,
+                5000);
+            var trace = {
+                x: plotData.x,
+                y: plotData.y,
+                mode: 'lines+markers',
+                name: 'Brute force simulation',
+            };
+            data.push(trace);
+        }
+
+        var xMax = Math.max(
+            quantity * oddsOfPrize * 50,  // 2 times the mean.
+            250,
+        );
+        var layout = {
+            xaxis: {
+                title: {
+                    text: 'Total prize money'
+                },
+                range: [0, xMax]
+            },
+            yaxis: {
+                title: {
+                    text: 'Cumulative probability'
+                },
+                range: [0, 1]
+            },
+        };
+        Plotly.newPlot('myDiv', data, layout);
+    }
+
+    // Do an initial calculation.
+    calculate();
+</script>
