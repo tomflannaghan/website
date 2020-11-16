@@ -2,13 +2,16 @@
 title: Premium Bond Calculator
 layout: post
 ---
-
+<p>
+    <i>Updated 16 Nov 2020 to December estimated prize distribution</i>
+</p>
 <p>
     I've got some premium bonds, and wanted a better idea of the distribution of returns
     than the <a href=https://www.moneysavingexpert.com/savings/premium-bonds-calculator/>MSE Calculator</a>
     provides. Unlike the MSE Calculator, I am quite likely not to update this as often as the rates change.
-    It's based on the Premium Bond prizes for September 2020 currently. See <a href="#details">below</a> for 
-    the details of the calculation.
+    It's based on the estimated Premium Bond prizes for December 2020 currently 
+    (taken from <a href="https://www.which.co.uk/news/2020/09/nsi-to-slash-nearly-30-million-of-premium-bond-prizes-from-december/">here</a>). 
+    See <a href="#details">below</a> for the details of the calculation.
 </p>
 
 <form>
@@ -73,20 +76,21 @@ layout: post
     var showApproxAlways = false;
     var showExactAlways = false;
 
+    // https://www.which.co.uk/news/2020/09/nsi-to-slash-nearly-30-million-of-premium-bond-prizes-from-december/
     var prizes = [
         [1000000, 2],
-        [100000, 7],
-        [50000, 14],
-        [25000, 27],
-        [10000, 69],
-        [5000, 139],
-        [1000, 2184],
-        [500, 6552],
-        [100, 29969],
-        [50, 29969],
-        [25, 3752125]
+        [100000, 4],
+        [50000, 9],
+        [25000, 16],
+        [10000, 43],
+        [5000, 83],
+        [1000, 1639],
+        [500, 4917],
+        [100, 26637],
+        [50, 26637],
+        [25, 2850256]
     ].reverse();
-    var oddsOfPrize = 1.0 / 24500;
+    var oddsOfPrize = 1.0 / 34500;
     
     var totalNumberOfPrizes = 0.0;
     prizes.forEach(function(value) {
