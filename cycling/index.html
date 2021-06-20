@@ -18,7 +18,7 @@ completed in 2021.</p>
 
 {% for loc in site.data.cycling_locations %}
 <a name="{{loc.name}}"></a><h2>{{loc.title}}</h2>
-
+{{loc.description | default: ''}}
 <ul class="postlist">
   {% for ride in site.pages %}
   {% if ride.location == loc.name and ride.bikeroute %}

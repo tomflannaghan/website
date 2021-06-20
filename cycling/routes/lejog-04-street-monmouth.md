@@ -5,4 +5,4 @@ layout: bikeroute
 location: lejog
 ---
 
-This is a very nice ride until the Avonmouth Bridge. We went up Cheddar Gorge to see it too (optional). Getting between the Avonmouth Bridge and the Severn Bridge is not particularly fun. We stuck to the Sustrans cycle routes, but these are extremely contorted. After the Severn Bridge, the route becomes nice again, with some stunning scenery coming into Monmouth from the hills.
+This is a very nice ride until the Avonmouth Bridge, and then somewhat less scenic as we cross the industrial area between Avonmouth and the Severn Bridge. SNIPPETEND We went through Cheddar so went up the Gorge and back - well worth the short detour. We stuck to the Sustrans cycle routes from Avonmouth to the Severn Bridge, but these are fairly contorted and slow going. After the Severn Bridge, the route becomes very nice again, with some stunning scenery coming into Monmouth from the hills.
