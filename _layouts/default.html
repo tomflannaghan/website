@@ -10,7 +10,7 @@
 
 <body>
 
-{% include main-menu.html %}
+{% if page.showmenu != false %} {% include main-menu.html %} {% endif %}
 
 <div class="container">
   <h1>{{ page.title }}</h1>

@@ -37,3 +37,5 @@ bootstrap-3.1.1/test-infra
 /tmp/working.gpx
 /link-checker-crawled-pages.pstore
 /_data/comments.yml
+
+.idea
