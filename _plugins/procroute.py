@@ -12,6 +12,9 @@ import scipy.interpolate
 
 input_data = json.load(sys.stdin)
 for route_data in input_data:
+    target_dir = os.path.dirname(route_data['alt_file'])
+    if not os.path.exists(target_dir):
+        os.mkdir(target_dir)
     print("Generating " + route_data['alt_file'])
     dist, ele = numpy.array(route_data['profile_data']).T
     ######## elevation figure

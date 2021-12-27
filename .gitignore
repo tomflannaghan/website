@@ -1,6 +1,7 @@
 _site
 cycling/alt/*svg
 cycling/kml/*kml
+!cycling/kml/template.kml
 .jekyll-cache
 
 ########## bootstrap git ignore ##########
