@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <script src="external/dygraph.min.js"></script>
+  <script src="external/gauge.min.js"></script>
+  <script src="frontend.js"></script>
+  <link rel="stylesheet" href="external/dygraph.css" />
+  <link rel="stylesheet" href="external/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="frontend.css" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="row my-3">
+      <div class="col-sm-6 col-lg-6 gauge-container">
+        <h5>Total Energy Generated</h5>
+        <span class="meter-reading" data-meter-id="burton_mill.total_power" 
+        data-precision="0" data-units="KWh">
+  	</span>
+      </div>
+
+      <div class="col-sm-6 col-lg-6 gauge-container">
+        <h5>Total Hours</h5>
+        <span class="meter-reading" data-meter-id="burton_mill.total_hours"
+        data-precision="0" data-units=" hours">
+  	</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <script src="external/dygraph.min.js"></script>
+  <script src="external/gauge.min.js"></script>
+  <script src="frontend.js"></script>
+  <link rel="stylesheet" href="external/dygraph.css" />
+  <link rel="stylesheet" href="external/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="frontend.css" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="row my-3">
+      <div class="col-sm-6 col-lg-3 gauge-container">
+        <h5>Lounge Temperature</h5>
+        <div class="gauge"
+             data-meter-id="lounge.temperature"
+             data-name=""
+             data-color="#DB6070"
+                 data-min="10"
+             data-max="25"
+             data-tick-size="2">
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 gauge-container">
+        <h5>Lounge Humidity</h5>
+        <div class="gauge"
+             data-meter-id="lounge.humidity"
+             data-name=""
+             data-color="#6F6EA0"
+             data-min="0"
+             data-max="100"
+             data-tick-size="10">
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 gauge-container">
+        <h5>Bedroom Temperature</h5>
+        <div class="gauge"
+             data-meter-id="bedroom.temperature"
+             data-name=""
+             data-color="#ffb516"
+             data-min="10"
+             data-max="25"
+             data-tick-size="2">
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 gauge-container">
+        <h5>Bedroom Humidity</h5>
+        <div class="gauge"
+             data-meter-id="bedroom.humidity"
+             data-name=""
+             data-color="#60C0DB"
+             data-min="0"
+             data-max="100"
+             data-tick-size="10">
+        </div>
+      </div>
+    </div>
+
+    <div style="width:100%;" class="graph" id="graph"
+         data-y1-meters="lounge.temperature bedroom.temperature"
+         data-y2-meters="lounge.humidity bedroom.humidity"
+         data-colors="#DB6070 #ffb516 #6F6EA0 #60C0DB">
+    </div>
+
+    <div class="my-3">
+      <button type="button" class="btn btn-outline-primary btn-sm history-button"
+            data-num-days="-2" data-graph-id="graph">
+        More history
+      </button>
+      <button type="button" class="btn btn-outline-primary btn-sm history-button"
+              data-num-days="2" data-graph-id="graph">
+        Less history
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>

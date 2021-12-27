@@ -1,0 +1,27 @@
+
+body {
+    font-family: Sans-Serif;
+}
+
+.gauge-container {
+    text-align: center;
+}
+
+.gauge {
+    position: relative;
+    display: inline-block;
+}
+
+.gauge_cvs {
+    position: relative;
+    width: 180px;
+    height: 150px;
+}
+
+.gauge_value {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
