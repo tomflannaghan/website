@@ -3,15 +3,15 @@ title: Premium Bond Calculator
 layout: post
 ---
 <p>
-    <i>Updated 28 May 2022 to due to updated odds and distribution of prizes</i>
+    <i>Updated 6 Nov 2022 to due to updated odds and distribution of prizes</i>
 </p>
 <p>
     I've got some premium bonds, and wanted a better idea of the distribution of returns
     than the <a href=https://www.moneysavingexpert.com/savings/premium-bonds-calculator/>MSE Calculator</a>
     provides. Unlike the MSE Calculator, I am quite likely not to update this as often as the rates change.
-    It's based on the odds given <a href="https://www.nsandi.com/interest-rates"> and the 
+    It's based on the odds given <a href="https://www.nsandi.com/interest-rates">here</a> and the 
     estimated prize distribution <a href="https://www.nsandi.com/get-to-know-us/monthly-prize-allocation">here</a> 
-    for June 2022.
+    for Nov 2022.
     See <a href="#details">below</a> for the details of the calculation.
 </p>
 
@@ -79,18 +79,18 @@ layout: post
 
     var prizes = [
         [1000000, 2],
-        [100000, 10],
-        [50000, 19],
-        [25000, 40],
-        [10000, 98],
-        [5000, 196],
-        [1000, 2764],
-        [500, 8292],
-        [100, 37922],
-        [50, 37922],
-        [25, 4748097]
+        [100000, 18],
+        [50000, 36],
+        [25000, 71],
+        [10000, 179],
+        [5000, 359],
+        [1000, 4383],
+        [500, 13149],
+        [100, 731859],
+        [50, 731859],
+        [25, 3499586]
     ].reverse();
-    var oddsOfPrize = 1.0 / 24500;
+    var oddsOfPrize = 1.0 / 24000;
     
     var totalNumberOfPrizes = 0.0;
     prizes.forEach(function(value) {
@@ -243,18 +243,19 @@ layout: post
             }
         }
         count.push(1);
-        returns.push(1000000);
+        returns.push(100000000);
         return {x: returns, y: count}
     }
 
-    function fillTable(plotData, numberOfBonds, months) {
-        function percentile(p) {
-            for (var i = 0; i < plotData.x.length; i++) {
-                if (plotData.y[i] >= p) return plotData.x[i];
-            }
+    function percentile(plotData, percentile) {
+        for (var i = 0; i < plotData.x.length; i++) {
+            if (plotData.y[i] >= percentile / 100.) return plotData.x[i];
         }
+    }
+
+    function fillTable(plotData, numberOfBonds, months) {
         function fillRow(p) {
-            var perc = percentile(p / 100.0)
+            var perc = percentile(plotData, p)
             var rate = perc * 12 / months / numberOfBonds * 100;
             document.getElementById(p + "p").textContent = "£" + Math.round(perc);
             document.getElementById(p + "pIR").textContent = rate.toFixed(2) + " %";        
@@ -320,7 +321,7 @@ layout: post
         }
 
         var xMax = Math.max(
-            50 * quantity * oddsOfPrize,  // Roughly 2 * mean prize.
+            2 * percentile(data[0], 50),  // Put the median in the middle.
             250,
         );
         var layout = {
