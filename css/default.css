@@ -23,3 +23,8 @@ ul.publist li {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
+/* Add a bit of padding at the bottom of the site */
+body {
+    padding-bottom: 3em;
+}
