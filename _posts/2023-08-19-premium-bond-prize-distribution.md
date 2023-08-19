@@ -39,7 +39,7 @@ If we use the above distribution with the September odds of 1 in 21,000, we get 
 
 NS&I publish the algorithm used to compute the prize distribution on [this page](https://www.nsandi.com/get-to-know-us/monthly-prize-allocation). I implemented this algorithm to understand what the correct distribution should be, and where they went wrong. The algorithm is fiddly but is well defined, and my implementation exactly reproduces the August published numbers given August's rate and odds.
 
-Once I had the algorithm, I could try to figure out what they did wrong. It turns out that the published September distribution can be reconstructed by assuming the August 2023 rate of 4% and odds of 1 in 22,000. That means that the only thing the NS&I changed when they computed their September distribution was the number of bonds.
+Once I had the algorithm, I could try to figure out what they did wrong. It turns out that the published September distribution can be reconstructed by assuming the August 2023 rate of 4% and odds of 1 in 22,000. That means that the only thing the NS&I changed when they computed their September distribution was the number of bonds, <i>overlooking the significantly improved rate and odds</i>.
 
 ### What should the values be?
 
