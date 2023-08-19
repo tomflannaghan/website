@@ -3,13 +3,13 @@ title: Premium Bond Calculator
 layout: post
 ---
 <p>
-    <i>Updated 8 Aug 2023 to due to updated odds and distribution of prizes</i>
+    <i>Updated 19 Aug 2023 to due to updated odds and rate for September 2023</i>
 </p>
 <p>
     I've got some premium bonds, and wanted a better idea of the distribution of returns
     than the <a href=https://www.moneysavingexpert.com/savings/premium-bonds-calculator/>MSE Calculator</a>
     provides. Unlike the MSE Calculator, I am quite likely not to update this as often as the rates change.
-    It's based on the odds given <a href="https://www.nsandi.com/interest-rates">here</a> and the 
+    It's based on the odds and rate given <a href="https://www.nsandi.com/interest-rates">here</a> and the 
     estimated prize distribution <a href="https://www.nsandi.com/get-to-know-us/monthly-prize-allocation">here</a> 
     for September 2023.
     See <a href="#details">below</a> for the details of the calculation.
@@ -57,18 +57,31 @@ layout: post
 <h3><a name="details"></a>The details</h3>
 <p>
     The calculator shows a cumulative probability of each prize by sampling from the distribution of total prize money
-    from our bonds over all of the months. It takes 20000 samples to form the distribution.
+    from our bonds over all of the months. It takes 20000 samples to form the distribution displayed. To calculate each sample 
+    from the distribution of total prize money from our bonds over the number of months specified, 
+    we first work out how many bonds will win a prize, based on the current published odds of winning a prize, and then draw
+    this many prizes from the distribution of prizes. 
 </p>
 <p>
-    If the number of bond draws (number of bonds * months) is greater than 
-    <math>25 * (1 - p) / p</math>, where <math>p</math> is the probability of a prize,
-    we use the normal approximation to the binomial distribution to get the number of prizes, rather than
-    using the binomial distribution directly.
-    For these large numbers of bond draws the approximation is extremely good, and performs better than the exact calculation.
+    To calculate the number of prize wins, we draw from the 
+    <a href="https://en.wikipedia.org/wiki/Binomial_distribution">Binomial Distribution</a>. For extremely 
+    large numbers of bond draws (in particular if the number of bond draws is greater than 
+    <math>25 * (1 - p) / p</math>, where <math>p</math> is the probability of a prize), we use the 
+    <a href="https://en.wikipedia.org/wiki/Binomial_distribution#Normal_approximation">Normal approximation to the 
+    Binomial Distribution</a> for performance reasons.
 </p>
 <p>
-    Once the number of prizes is determined, it then draws each prize according to the distribution of prizes (with replacement).
+    Once we have the number of prize wins, we draw each win from the distribution of prizes. I have found that the published 
+    expected distribution of prizes can be incorrect when the rate changes.
+    I observed this in August 2023, where NS&amp;I used the August rate rather than the September rate to compute the 
+    estimated September distribution, meaning the estimated distribution combined with the September odds
+    did not give the September interest rate. See  <a href="{% post_url 2023-08-19-premium-bond-prize-distribution %}">this post</a> for more details and the calculations, and corrected values.
+    To ensure I'm robust to incorrect distributions published by NS&amp;I, I now compute the distribution of prizes according 
+    to the <a href="https://www.nsandi.com/get-to-know-us/monthly-prize-allocation">published rules governing the distribution of prizes</a>, 
+    ensuring we have a distribution that has the correct overall interest rate. If the rate doesn't change in a month, this will
+    match the published prize distribution, which I check whenever I update.
 </p>
+
 
 <script src="/css/plotly-latest.min.js"></script>
 <script>
@@ -76,21 +89,89 @@ layout: post
     var showBruteForce = false;
     var showApproxAlways = false;
     var showExactAlways = false;
+    var runPrizeDistributionTest = true;
+    
+    function prizeDistribution(high, medium, odds, rate, prizePot) {
+        let prizes = [];
+        
+        // High tier:
+        let highPrizePot = high * prizePot;
+        // Two 1 million:
+        highPrizePot -= 2000000;
+        prizes.push([1000000, 2]);
+        // Equal value in each of the remaining prize tiers, with normal rounding.
+        let highPrizes = [100000, 50000, 25000, 10000, 5000];
+        let surplus = 0;
+        highPrizes.forEach(function (prize) {
+            let thisTier = highPrizePot / highPrizes.length + surplus;
+            let numPrizes = Math.round(thisTier / prize);
+            surplus = thisTier - numPrizes * prize;
+            prizes.push([prize, numPrizes]);
+        });
+        // Final surplus goes to the medium tier. 
+        
+        // Medium tier - three times as many 500. Any surplus to lower tier.
+        let mediumPrizePot = medium * prizePot + surplus;
+        let num1000Prizes = Math.floor(mediumPrizePot / (1000 + 3 * 500));
+        prizes.push([1000, num1000Prizes]);
+        prizes.push([500, num1000Prizes * 3]);
+        
+        // Lower tier. Equal number of 100 and 50, and the total is correct.
+        let lowerPrizePot = prizes.reduce((a, v) => { return a - v[0] * v[1] }, prizePot);
+        let totalNumBonds = Math.round(prizePot / rate * 12);
+        let totalNumPrizes = Math.round(totalNumBonds * odds);
+        let numLowerPrizes = prizes.reduce((a, v) => { return a - v[1] }, totalNumPrizes);
+        // Simultaneous equations: 100x + 50x + 25y = V, 2 * x + y = N; => 100x = V - 25N.
+        let num100Prizes = Math.floor((lowerPrizePot - 25 * numLowerPrizes) / 100);
+        let num25Prizes = numLowerPrizes - 2 * num100Prizes;
+        prizes.push([100, num100Prizes]);
+        prizes.push([50, num100Prizes]);
+        prizes.push([25, num25Prizes]);
 
-    var prizes = [
-        [1000000, 2],
-        [100000, 77],
-        [50000, 154],
-        [25000, 309],
-        [10000, 770],
-        [5000, 1540],
-        [1000, 16211],
-        [500, 48633],
-        [100, 1877450],
-        [50, 1877450],
-        [25, 1703721]
-    ].reverse();
+        return prizes;
+    }
+
+    function testPrizeDistribution() {
+        let prizes = prizeDistribution(0.1, 0.1, 1.0 / 22000.0, 0.04, 405263025);
+        let expectedPrizes = [
+            [1000000, 2],
+            [100000, 77],
+            [50000, 154],
+            [25000, 309],
+            [10000, 770],
+            [5000, 1540],
+            [1000, 16211],
+            [500, 48633],
+            [100, 1877450],
+            [50, 1877450],
+            [25, 1703718]
+        ];
+        for (let i = 0; i < prizes.length; i++) {
+            if (prizes[i].toString() != expectedPrizes[i].toString()) {
+                console.error(
+                    "Prizes don't match! ", prizes[i].toString(), expectedPrizes[i].toString()
+                );
+            }
+        }
+    }
+
+    if (testPrizeDistribution) testPrizeDistribution();
+
+    var highPercent = 0.1;
+    var medPercent = 0.1;
     var oddsOfPrize = 1.0 / 21000;
+    var rate = 0.0465;
+    var prizePot = 405263025 * rate / 0.04;
+    var prizes = prizeDistribution(
+        highPercent, medPercent, oddsOfPrize, rate, prizePot
+    ).reverse();
+    if (testPrizeDistribution) {
+        prizes.forEach(function (p) {
+            console.log("Prize", p);
+        });
+        console.log("Prize Pot", prizes.reduce((a, v) => { return a + v[0] * v[1] }, 0));
+        console.log("Num Prizes", prizes.reduce((a, v) => { return a + v[1] }, 0));
+    }
     
     var totalNumberOfPrizes = 0.0;
     prizes.forEach(function(value) {
