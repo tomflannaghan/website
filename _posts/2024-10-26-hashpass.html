@@ -1,0 +1,41 @@
+---
+title: Hashpass
+layout: post
+tags:
+    - tool
+---
+<p>
+    An online version of the hashpass algorithm as used in the <a href="https://github.com/stepchowfun/hashpass">Hashpass extension</a>. 
+    Entirely local in the browser and very basic. Handy if you haven't got the plugin available.
+</p>
+
+<form>
+    <div class="form-group">
+        <label for="domainTextBox">Domain</label>
+        <input type="text" class="form-control" id="domainTextBox" value="" />
+    </div>
+    <div class="form-group">
+        <label for="keyTextBox">Key</label>
+        <input type="password" class="form-control" id="keyTextBox" value="" />
+    </div>
+    <div class="form-group">
+        <label for="resultTextBox">Key</label>
+        <input type="text" class="form-control" id="resultTextBox" value="" readonly />
+    </div>
+    <button type="button" id="calculateButton" class="btn btn-default" onclick="calculate()">Calculate</button>
+    <div id="resultDiv"></div>
+</form>
+
+<script src="/js/sjcl.js"></script>
+<script>
+    function calculate() {
+        var domain = document.getElementById("domainTextBox").value;
+        var key = document.getElementById("keyTextBox").value;
+        var bitArray = sjcl.codec.utf8String.toBits(domain.toLowerCase().trim() + '/' + key);
+        for (let i = 0; i < 2 ** 16; i++) {
+            bitArray = sjcl.hash.sha256.hash(bitArray);
+        }
+        var result = sjcl.codec.base64.fromBits(bitArray);
+        document.getElementById("resultTextBox").value = result.substring(0, 16);
+    }
+</script>
