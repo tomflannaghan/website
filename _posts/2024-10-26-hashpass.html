@@ -16,14 +16,12 @@ tags:
     </div>
     <div class="form-group">
         <label for="keyTextBox">Key</label>
-        <input type="password" class="form-control" id="keyTextBox" value="" />
+        <div style="display:flex;gap:8px;align-items:center;">
+            <input type="password" class="form-control" id="keyTextBox" value="" onkeydown="if(event.key==='Enter')calculate()" />
+            <button type="button" id="calculateButton" class="btn btn-default" onclick="calculate()">Calculate</button>
+            <span id="copiedMsg" style="display:none;color:green;white-space:nowrap;">Copied to clipboard!</span>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="resultTextBox">Key</label>
-        <input type="text" class="form-control" id="resultTextBox" value="" readonly />
-    </div>
-    <button type="button" id="calculateButton" class="btn btn-default" onclick="calculate()">Calculate</button>
-    <div id="resultDiv"></div>
 </form>
 
 <script src="/js/sjcl.js"></script>
@@ -35,7 +33,11 @@ tags:
         for (let i = 0; i < 2 ** 16; i++) {
             bitArray = sjcl.hash.sha256.hash(bitArray);
         }
-        var result = sjcl.codec.base64.fromBits(bitArray);
-        document.getElementById("resultTextBox").value = result.substring(0, 16);
+        var result = sjcl.codec.base64.fromBits(bitArray).substring(0, 16);
+        document.getElementById("keyTextBox").value = '';
+        navigator.clipboard.writeText(result);
+        var msg = document.getElementById("copiedMsg");
+        msg.style.display = 'inline';
+        setTimeout(function() { msg.style.display = 'none'; }, 2000);
     }
 </script>
