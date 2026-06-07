@@ -12,12 +12,12 @@ tags:
 <form>
     <div class="form-group">
         <label for="domainTextBox">Domain</label>
-        <input type="text" class="form-control" id="domainTextBox" value="" />
+        <input type="text" class="form-control" id="domainTextBox" value="" autocomplete="off" />
     </div>
     <div class="form-group">
         <label for="keyTextBox">Key</label>
         <div style="display:flex;gap:8px;align-items:center;">
-            <input type="password" class="form-control" id="keyTextBox" value="" onkeydown="if(event.key==='Enter')calculate()" />
+            <input type="password" class="form-control" id="keyTextBox" value="" autocomplete="new-password" onkeydown="if(event.key==='Enter')calculate()" />
             <button type="button" id="calculateButton" class="btn btn-default" onclick="calculate()">Calculate</button>
             <span id="copiedMsg" style="display:none;color:green;white-space:nowrap;">Copied to clipboard!</span>
         </div>
