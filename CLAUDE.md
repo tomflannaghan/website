@@ -43,3 +43,6 @@ publish. Edit the source and rebuild.
 - `update-premium-bonds` — refreshing the Premium Bond Calculator with the
   latest NS&I rate, odds and prize pot. Use it rather than editing that post
   by hand; it covers the verification step against NS&I's published table.
+- `this-healthcheck` — run by the global `/healthcheck`. Checks the live site is
+  up and in sync with the source, and reports (but never makes) any Premium
+  Bond Calculator update that NS&I's latest figures call for.
